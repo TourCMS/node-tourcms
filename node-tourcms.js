@@ -32,76 +32,76 @@ if(typeof config.channelId !== 'undefined')
 
 TourCMS.prototype.makeRequest = function(a) {
 
-// Sensible defaults
-if(typeof a.channelId == "undefined")
-  a.channelId = 0;
+  // Sensible defaults
+  if(typeof a.channelId == "undefined")
+    a.channelId = 0;
 
-if(typeof a.verb == "undefined")
-  a.verb = 'GET';
+  if(typeof a.verb == "undefined")
+    a.verb = 'GET';
 
-if(typeof a.postData == "undefined") {
-  var apiParams = "";
-} else {
-  // Convert object into XML
-  var builder = new xml2js.Builder();
-  var apiParams = builder.buildObject(a.postData);
-}
-
-// Get the current time
-var outboundTime = this.generateTime();
-
-// Generate the signature
-var signature = this.generateSignature(a.path, a.channelId, a.verb, outboundTime, this.apiKey);
-
-var options = {
-  method: a.verb,
-  hostname: this.hostname,
-  path: a.path,
-  headers: {
-    'x-tourcms-date': outboundTime,
-    'Authorization': 'TourCMS ' + a.channelId + ':' + this.marketplaceId + ':' + signature,
-    'Content-type': 'text/xml;charset="utf-8"',
-    'Content-length': apiParams.length
-  }
-}
-
-var req = https.request(options, function(response) {
-
-  response.setEncoding("utf8");
-
-  // Pipe to handler
-  var concatStream = concat(apiResponded);
-  response.pipe(concatStream);
-
-  // TODO: Handle errors
-  response.on("error", console.log);
-
-  // Process API response
-  function apiResponded(apiResponse) {
-
-    // Convert XML to JS object
-    var parser = new xml2js.Parser({explicitArray:false});
-    parser.parseString(apiResponse, function (err, result) {
-      // If the method processes the response, give it back
-      // Otherwise call the original callback
-
-      if(typeof a.processor !== 'undefined')
-        a.processor(result.response, a.callback);
-      else
-        a.callback(result.response);
-    });
-
-
+  if(typeof a.postData == "undefined") {
+    var apiParams = "";
+  } else {
+    // Convert object into XML
+    var builder = new xml2js.Builder();
+    var apiParams = builder.buildObject(a.postData);
   }
 
-});
+  // Get the current time
+  var outboundTime = this.generateTime();
 
-// If we're posting, let's post
-if(a.verb == "POST")
-  req.write(apiParams);
+  // Generate the signature
+  var signature = this.generateSignature(a.path, a.channelId, a.verb, outboundTime, this.apiKey);
 
-// We're done requesting
-req.end();
+  var options = {
+    method: a.verb,
+    hostname: this.hostname,
+    path: a.path,
+    headers: {
+      'x-tourcms-date': outboundTime,
+      'Authorization': 'TourCMS ' + a.channelId + ':' + this.marketplaceId + ':' + signature,
+      'Content-type': 'text/xml;charset="utf-8"',
+      'Content-length': apiParams.length
+    }
+  }
+
+  var req = https.request(options, function(response) {
+
+    response.setEncoding("utf8");
+
+    // Pipe to handler
+    var concatStream = concat(apiResponded);
+    response.pipe(concatStream);
+
+    // TODO: Handle errors
+    response.on("error", console.log);
+
+    // Process API response
+    function apiResponded(apiResponse) {
+
+      // Convert XML to JS object
+      var parser = new xml2js.Parser({explicitArray:false});
+      parser.parseString(apiResponse, function (err, result) {
+        // If the method processes the response, give it back
+        // Otherwise call the original callback
+
+        if(typeof a.processor !== 'undefined')
+          a.processor(result.response, a.callback);
+        else
+          a.callback(result.response);
+      });
+
+
+    }
+
+  });
+
+  // If we're posting, let's post
+  if(a.verb == "POST")
+    req.write(apiParams);
+
+  // We're done requesting
+  req.end();
 };
 
 // Housekeeping
