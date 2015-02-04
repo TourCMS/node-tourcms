@@ -234,14 +234,9 @@ TourCMS.checkTourAvailability({
   },
   callback: function(response) {
 
-    //Loop through each component
+    //Loop through each component and output its component key
     response.available_components.component.forEach(function(component) {
-      // Loop through each price row
-      component.price_breakdown.price_row.forEach(function(priceRow) {
-        // Display the node text
-        console.log(priceRow._);
-          })
-      });  
+      console.log(component.component_key);
   }
 });
 ```
