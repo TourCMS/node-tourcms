@@ -25,7 +25,9 @@ var TourCMS = new TourCMSApi({
     marketplaceId: YOUR_MARKETPLACE_ID
   });
 ```
-Then call one of the API methods below, the wrapper uses [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) to automatically convert the response XML into a JavaScript object, some effort is also made to ensure things that might be arrays, are.
+Then call one of the API methods below.
+
+The wrapper uses [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) to automatically convert the response XML into a JavaScript object, some effort is also made to ensure things that might be arrays, are.
 
 ## API methods
 
