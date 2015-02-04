@@ -139,7 +139,7 @@ TourCMS.listTours({
 
 #### Show Tour
 
-Return details on a specific Tour.
+Return full details on a specific Tour (i.e. more than the subset of data returned by "Search Tours").
 
 If a `channelId` is not provided, the one passed in the initial configuration will be used.
 
