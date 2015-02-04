@@ -348,6 +348,57 @@ TourCMS.prototype.showTourDatesDeals = function(a) {
   this.makeRequest(a);
 };
 
+// Get Departures Overview
+TourCMS.prototype.getDeparturesOverview = function(a) {
+
+  if(typeof a.channelId === 'undefined')
+    a.channelId = this.channelId;
+
+  // Build qyery string
+  params = {};
+
+  if(typeof a.date !== 'undefined')
+    params.date = this.toTourcmsDate(a.date);
+
+  if(typeof a.productTypes !== 'undefined')
+    params.product_type = a.productTypes.join(',');
+
+  if(typeof a.page !== 'undefined')
+    params.page = a.page;
+
+  if(typeof a.perPage !== 'undefined')
+    params.per_page = a.perPage;
+
+  a.path = '/c/tour/datesprices/dep/manage/overview.xml?' + querystring.stringify(params);
+
+  // Sanitise response
+  a.processor = function(response, callback) {
+
+    // Check we have a tour count
+    if(typeof response.total_tour_count === 'undefined')
+      response.total_tour_count = 0;
+
+    // Check we have an array of tours
+    if(typeof response.tour === 'undefined')
+      response.tour = [];
+    else
+      response.tour = [].concat(response.tour);
+
+    // Check each tour has an array of departures
+    response.tour.forEach(function(tour) {
+      if(tour.departures == '')
+        tour.departures = {departure:[]};
+      else
+        tour.departures.departure = [tour.departures.departure].concat();
+
+    });
+
+    callback(response);
+  };
+
+  this.makeRequest(a);
+};
+
 // Show Departure
 TourCMS.prototype.showDeparture = function(a) {
 
@@ -485,6 +536,12 @@ TourCMS.prototype.generateSignature = function(path, channelId, verb, outboundTi
 // Generate the current Unix Timestamp (PHP style)
 TourCMS.prototype.generateTime = function() {
   return Math.floor(new Date().getTime() / 1000);
+}
+
+// Convert a JS date to the format TourCMS uses
+// YYYY-MM-DD
+TourCMS.prototype.toTourcmsDate = function(date) {
+  return date.getFullYear() + '-' + ('0' + (date.getMonth()+1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 }
 
 // URL encode to match PHP

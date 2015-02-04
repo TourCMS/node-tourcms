@@ -198,8 +198,28 @@ TourCMS.showTourDatesDeals({
 });
 ```
 
+#### Departures Overview
+Gives an overview of the departures for a specific date, good starter for a "Today" type screen.
+
+Includes the running tours, details on their departure including number of bookings & spaces.
+
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+http://www.tourcms.com/support/api/mp/tour_datesprices_dep_manage_show.php
+
+```js
+TourCMS.getDeparturesOverview({
+  date: new Date(),
+  callback: function(response) {
+    console.log(response);
+  }
+});
+```
+
 #### Show Departure
-Show a departure, designed for managing dates and prices rather than displaying to customers. Includes the loaded rates, spaces, special offer details, bookings etc.
+Show a specific departure, designed for staff managing bookings, dates and prices rather than displaying to customers.
+
+Includes the loaded rates, spaces, special offer details, bookings etc.
 
 If a `channelId` is not provided, the one passed in the initial configuration will be used.
 
