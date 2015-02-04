@@ -1,0 +1,24 @@
+{
+  "name": "tourcms",
+  "description": "Node wrapper for the TourCMS API.",
+  "keywords": [
+    "tourcms",
+    "api"
+  ],
+  "homepage": "https://github.com/tourcms/node-tourcms",
+  "version": "0.0.1",
+  "author": "TourCMS <support@tourcms.com> (http://www.tourcms.com)",
+  "contributors": [
+    "Paul Slugocki <paul.slugocki@tourcms.com> (https://github.com/paulslugocki)"
+  ],
+  "main": "node-tourcms.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tourcms/node-tourcms.git"
+  },
+  "dependencies": {
+    "xml2js": "0.4.x",
+    "concat-stream": "1.4.x"
+  },
+  "license": "MIT"
+}
