@@ -68,7 +68,7 @@ TourCMS.listChannels({
 
 Show details on a specific channel.
 
-If a Channel ID is not provided, the function will use the Channel ID passed in the initial configuration.
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
 
 http://www.tourcms.com/support/api/mp/channel_show.php
 
@@ -103,7 +103,7 @@ TourCMS.channelPerformance({
 
 Search Tours.
 
-If a Channel ID is not provided, the function will use the Channel ID passed in the initial configuration.
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
 
 http://www.tourcms.com/support/api/mp/tour_search.php
 
@@ -124,7 +124,7 @@ TourCMS.searchTours({
 
 List Tours, quicker and not pagenated versus Search Tours, however returns less data. Ideal for exporting from TourCMS.
 
-If a Channel ID is not provided, the function will use the Channel ID passed in the initial configuration.
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
 
 http://www.tourcms.com/support/api/mp/tour_list.php
 
