@@ -197,3 +197,51 @@ TourCMS.showTourDatesDeals({
   }
 });
 ```
+
+#### Show Departure
+Show a departure, designed for managing dates and prices rather than displaying to customers. Includes the loaded rates, spaces, special offer details, bookings etc.
+
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+http://www.tourcms.com/support/api/mp/tour_datesprices_dep_manage_show.php
+
+```js
+TourCMS.showDeparture({
+  channelId: 3930,
+  tourId: 1,
+  departureId: 8117,
+  callback: function(response) {
+    console.log(response);
+  }
+});
+```
+
+#### Check Tour Availability
+Check availability for a specific date and number of people on a specific tour.
+
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+http://www.tourcms.com/support/api/mp/tour_checkavail.php
+
+The following example checks availability for 2 people on the first rate (e.g. usually "2 Adults") on the 1st Jan 2016 on Tour ID 1, Channel 3930.
+
+```js
+TourCMS.checkTourAvailability({
+  qs: {
+    id: 6,
+    date: '2016-01-01',
+    r1: 2
+  },
+  callback: function(response) {
+
+    //Loop through each component
+    response.available_components.component.forEach(function(component) {
+      // Loop through each price row
+      component.price_breakdown.price_row.forEach(function(priceRow) {
+        // Display the node text
+        console.log(priceRow._);
+          })
+      });  
+  }
+});
+```

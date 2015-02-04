@@ -348,6 +348,7 @@ TourCMS.prototype.showTourDatesDeals = function(a) {
   this.makeRequest(a);
 };
 
+
 // Check Tour Availability
 TourCMS.prototype.checkTourAvailability = function(a) {
 
