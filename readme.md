@@ -101,7 +101,7 @@ TourCMS.channelPerformance({
 ### Tour (Product) APIs
 #### Search Tours
 
-Search Tours.
+Search Tours by various criteria (see list below), includes a subset of the information held about each tour. Good for displaying a selection of tours to a customer.
 
 If a `channelId` is not provided, the one passed in the initial configuration will be used.
 
