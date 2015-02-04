@@ -348,6 +348,28 @@ TourCMS.prototype.showTourDatesDeals = function(a) {
   this.makeRequest(a);
 };
 
+// Show Departure
+TourCMS.prototype.showDeparture = function(a) {
+
+  if(typeof a.channelId === 'undefined')
+    a.channelId = this.channelId;
+
+  a.path = '/c/tour/datesprices/dep/manage/show.xml?id=' + a.tourId + '&departure_id=' + a.departureId;
+
+  // Sanitise response
+  a.processor = function(response, callback) {
+
+    if(typeof response.tour.bookings === 'undefined')
+      response.tour.bookings = {booking:[]};
+    else
+      response.tour.bookings.booking = [].concat(response.tour.bookings.booking);
+
+    callback(response);
+  };
+
+  this.makeRequest(a);
+
+};
 
 // Check Tour Availability
 TourCMS.prototype.checkTourAvailability = function(a) {
