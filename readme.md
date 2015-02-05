@@ -304,7 +304,7 @@ TourCMS.checkTourAvailability({
 ```
 
 #### Show Promo Code
-Get details on a promotional code. Ueful for checking whether a promo code is valid for a certain channel, and if so, whether a membership number or similar is required to verify the promo.
+Get details on a promotional code. Useful for checking whether a promo code is valid for a certain channel, and if so, whether a membership number or similar is required to verify the promo.
 
 If a `channelId` is not provided, the one passed in the initial configuration will be used.
 
