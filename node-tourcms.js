@@ -422,6 +422,22 @@ TourCMS.prototype.showDeparture = function(a) {
 
 };
 
+// Update departure
+TourCMS.prototype.updateDeparture = function(a) {
+
+  if(typeof a.channelId === 'undefined')
+    a.channelId = this.channelId;
+
+  a.postData = {departure: a.departure};
+
+  a.path = '/c/tour/datesprices/dep/manage/update.xml';
+
+  a.verb = 'POST';
+
+  this.makeRequest(a);
+
+};
+
 // Check Tour Availability
 TourCMS.prototype.checkTourAvailability = function(a) {
 
@@ -479,6 +495,20 @@ TourCMS.prototype.checkTourAvailability = function(a) {
   a.path = '/c/tour/datesprices/checkavail.xml?' + a.qs;
 
   this.makeRequest(a);
+};
+
+// Show Promo
+TourCMS.prototype.showPromo = function(a) {
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.channelId;
+
+  a.path = '/c/promo/show.xml?promo_code=' + a.promo;
+
+  this.makeRequest(a);
+
 };
 
 

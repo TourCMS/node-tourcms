@@ -236,6 +236,30 @@ TourCMS.showDeparture({
 });
 ```
 
+#### Update Departure
+
+Update a departure prices, spaces, special offer etc.
+
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+http://www.tourcms.com/support/api/mp/tour_datesprices_dep_manage_update.php
+
+```js
+TourCMS.updateDeparture({
+  departure: {
+    tour_id: 6,
+    departure_id: 4954,
+    special_offer: {
+      offer_price: 45,
+      offer_note: "Early booking discount"
+    }
+  },
+  callback: function(response) {
+    console.log(response);
+  }
+});
+```
+
 #### Check Tour Availability
 Check availability for a specific date and number of people on a specific tour.
 
@@ -260,3 +284,24 @@ TourCMS.checkTourAvailability({
   }
 });
 ```
+
+#### Show Promo Code
+Get details on a promotional code. Ueful for checking whether a promo code is valid for a certain channel, and if so, whether a membership number or similar is required to verify the promo.
+
+If a Channel ID is not provided, the function will use the Channel ID
+configured on the service.
+
+http://www.tourcms.com/support/api/mp/promo_show.php
+
+The following example tries to show promo code 'TENPERCENT' on Channel 3930.
+```js
+tourcmsApiService.showPromo({
+  channelId: 3930,
+  promo: 'TENPERCENT',
+  callback: function(response) {
+    console.log(response);
+  }
+});
+```
+
+### Booking APIs
