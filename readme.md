@@ -288,6 +288,7 @@ The following example checks availability for 2 people on the first rate (e.g. u
 
 ```js
 TourCMS.checkTourAvailability({
+  channelId: 3930,
   qs: {
     id: 6,
     date: '2016-01-01',
@@ -305,8 +306,7 @@ TourCMS.checkTourAvailability({
 #### Show Promo Code
 Get details on a promotional code. Ueful for checking whether a promo code is valid for a certain channel, and if so, whether a membership number or similar is required to verify the promo.
 
-If a Channel ID is not provided, the function will use the Channel ID
-configured on the service.
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
 
 http://www.tourcms.com/support/api/mp/promo_show.php
 
