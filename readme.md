@@ -69,7 +69,7 @@ Can also provide a `verb` (default is 'GET') and `postData`, which - if provided
 
 #### List Channels
 
-List channels.
+List the Channels (supplier brands) connected, to be used by Agents/Affiliates.
 
 http://www.tourcms.com/support/api/mp/channels_list.php
 
