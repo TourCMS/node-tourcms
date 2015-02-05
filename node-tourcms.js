@@ -30,6 +30,7 @@ if(typeof config.channelId !== 'undefined')
 
 // class methods
 
+// Call the API
 TourCMS.prototype.makeRequest = function(a) {
 
   // Sensible defaults
@@ -106,6 +107,7 @@ TourCMS.prototype.makeRequest = function(a) {
 
 // Housekeeping
 
+// API Rate Limit Status
 TourCMS.prototype.apiRateLimitStatus = function(a) {
 
 if(typeof a === 'undefined')
@@ -116,6 +118,13 @@ if(typeof a.channelId === 'undefined')
 
 
   a.path = '/api/rate_limit_status.xml';
+
+  this.makeRequest(a);
+
+};
+
+// Make a generic API request
+TourCMS.prototype.genericRequest = function(a) {
 
   this.makeRequest(a);
 

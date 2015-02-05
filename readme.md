@@ -48,6 +48,23 @@ TourCMS.apiRateLimitStatus({
   })
 ```
 
+#### Generic API request
+
+Provides an interface for calling APIs that don't yet have a specific wrapper function.
+
+E.g. to simulate API Rate Limit Status (above):
+
+```js
+tourcmsApiService.genericRequest({
+  channelId: 3930,
+  path: '/api/rate_limit_status.xml',
+  callback: function(response) {
+    console.log(response);
+  }
+})
+```
+Can also provide a `verb` (default is 'GET') and `postData`, which - if provided - must be an object representing the XML data to post to the API.
+
 ### Channel APIs
 
 #### List Channels
