@@ -184,7 +184,7 @@ If a `channelId` is not provided, the one passed in the initial configuration wi
 http://www.tourcms.com/support/api/mp/tour_update.php
 
 ```js
-TourCMS.showTour({
+TourCMS.updateTour({
   tour: {
     tourId: 1,
     tour_url: '/tours/example_tour_1/'
