@@ -6,7 +6,7 @@
     "api"
   ],
   "homepage": "https://github.com/tourcms/node-tourcms",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "author": "TourCMS <support@tourcms.com> (http://www.tourcms.com)",
   "contributors": [
     "Paul Slugocki <paul.slugocki@tourcms.com> (https://github.com/paulslugocki)"
@@ -18,10 +18,7 @@
   },
   "dependencies": {
     "xml2js": "0.4.x",
-    "concat-stream": "1.4.x",
-    "crypto": "*",
-    "querystring": "*",
-    "https": "*"
+    "concat-stream": "1.4.x"
   },
   "engines" : {
       "node" : "*"
