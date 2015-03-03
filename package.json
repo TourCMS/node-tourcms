@@ -18,7 +18,13 @@
   },
   "dependencies": {
     "xml2js": "0.4.x",
-    "concat-stream": "1.4.x"
+    "concat-stream": "1.4.x",
+    "crypto": "*",
+    "querystring": "*",
+    "https": "*"
+  },
+  "engines" : {
+      "node" : "*"
   },
   "license": "MIT"
 }

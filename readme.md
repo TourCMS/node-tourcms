@@ -2,6 +2,10 @@
 
 Node wrapper for the [TourCMS](http://www.tourcms.com/) [API](http://www.tourcms.com/support/api/mp/).
 
+## Status
+
+API list partially completed, consider early/beta code.
+
 ## Installation
 
 The easiest way to install is via [npm](http://npmjs.org) which will install node-tourcms and all dependencies.
@@ -322,3 +326,5 @@ tourcmsApiService.showPromo({
 ```
 
 ### Booking APIs
+
+http://www.tourcms.com/support/api/mp/booking_creation.php
