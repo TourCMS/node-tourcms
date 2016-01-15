@@ -327,4 +327,60 @@ tourcmsApiService.showPromo({
 
 ### Booking APIs
 
-http://www.tourcms.com/support/api/mp/booking_creation.php
+#### Search bookings
+
+http://www.tourcms.com/support/api/mp/booking_search.php
+
+#### Show booking
+
+http://www.tourcms.com/support/api/mp/booking_show.php
+
+#### Get Booking Key Redirect
+
+Get a URL for use in retrieving a new booking key, ensures marketplace data (clicks, referrer) is maintained on the final booking / customer record.
+
+Only for use by Tour Operators (mandatory step), not required when the API is being used by Marketplace Agents.
+
+http://www.tourcms.com/support/api/mp/booking_getkey.php
+
+#### Start New Booking
+
+Create a temporary booking, holding off stock for the customer
+
+http://www.tourcms.com/support/api/mp/booking_start_new.php
+
+#### Commit Booking
+
+Convert a temporary booking created with Start new booking into a live booking
+
+http://www.tourcms.com/support/api/mp/booking_commit_new.php
+
+### Voucher APIs
+
+http://www.tourcms.com/support/api/mp/voucher_redemption.php
+
+#### Search Vouchers
+
+Get a list of bookings and any of their components that are due to start today that match a voucher barcode
+
+http://www.tourcms.com/support/api/mp/voucher_search.php
+
+#### Redeem Voucher
+
+Redeem / check in the client on a component (tour) on a booking
+
+http://www.tourcms.com/support/api/mp/voucher_redeem.php
+
+### Payment APIs
+
+#### Create Payment / Refund
+
+Store details of a new payment on a booking sales ledger. Allows Tour Operators to integrate their own payment methods and update the TourCMS sales ledger automatically.
+
+http://www.tourcms.com/support/api/mp/payment_create.php
+
+#### Create Spreedly Payment
+
+Spreedly specific version of the previous method.
+
+http://www.tourcms.com/support/api/mp/spreedly_payment_create.php
