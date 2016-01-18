@@ -788,6 +788,36 @@ TourCMS.prototype.showCustomer = function(a) {
   this.makeRequest(a);
 };
 
+// Create Enquiry
+TourCMS.prototype.createEnquiry = function(a) {
+
+  if(typeof a === "undefined")
+    a = {};
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.channelId;
+
+  // Enquiry object, create empty one if it doesn't exist
+  if(typeof a.enquiry === "undefined")
+    a.enquiry = {};
+
+  // Build object that will be turned into XML
+  a.postData = ({
+    enquiry: a.enquiry,
+  });
+
+  // Set API path
+  a.path = '/c/enquiry/new.xml';
+
+  // POST
+  a.verb = 'POST';
+
+  this.makeRequest(a);
+
+}
+
 // Seach Enquiries
 TourCMS.prototype.searchEnquiries = function(a) {
 

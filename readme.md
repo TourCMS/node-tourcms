@@ -568,6 +568,24 @@ For agents/affiliates only, create a new customer & enquiry in an operators acco
 
 http://www.tourcms.com/support/api/mp/enquiry_create.php
 
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+```js
+TourCMS.createEnquiry({
+  channelId: 3930,
+  enquiry: {
+    firstname: "Joe",
+    surname: "Bloggs",
+    email: "test@example.com",
+    enquiry_type: "General enquiry",
+    enquiry_detail: "Enquiry text goes here"
+  },
+  callback: function(response) {
+    console.log(response);
+  }
+});
+```
+
 #### Search Enquiries
 
 http://www.tourcms.com/support/api/mp/enquiry_search.php
