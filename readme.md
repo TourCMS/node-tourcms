@@ -59,7 +59,7 @@ Provides an interface for calling APIs that don't yet have a specific wrapper fu
 E.g. to simulate API Rate Limit Status (above):
 
 ```js
-tourcmsApiService.genericRequest({
+TourCMS.genericRequest({
   channelId: 3930,
   path: '/api/rate_limit_status.xml',
   callback: function(response) {
@@ -316,7 +316,7 @@ http://www.tourcms.com/support/api/mp/promo_show.php
 
 The following example tries to show promo code 'TENPERCENT' on Channel 3930.
 ```js
-tourcmsApiService.showPromo({
+TourCMS.showPromo({
   channelId: 3930,
   promo: 'TENPERCENT',
   callback: function(response) {
@@ -361,15 +361,40 @@ http://www.tourcms.com/support/api/mp/voucher_redemption.php
 
 #### Search Vouchers
 
-Get a list of bookings and any of their components that are due to start today that match a voucher barcode
+Get a list of bookings and any of their components that are due to start today that match a voucher barcode. Response includes keys that can be used to redeem the voucher.
+
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
 
 http://www.tourcms.com/support/api/mp/voucher_search.php
 
+The following example matches bookings with a voucher string, booking ID or agent ref matching the text "VOUCHER_STRING_HERE" on Channel 3930 and wideDates enabled (by default the API only searches for bookings for today).
+
+```js
+TourCMS.searchVouchers({
+  channelId: 3930,
+  voucherString: "VOUCHER_STRING_HERE",
+  wideDates: 1
+});
+```
+
 #### Redeem Voucher
 
-Redeem / check in the client on a component (tour) on a booking
+Redeem / check in the client on a component (tour) on a booking, optionally specify a note to store on the booking.
+
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
 
 http://www.tourcms.com/support/api/mp/voucher_redeem.php
+
+```js
+TourCMS.redeemVoucher({
+  channelId: 3930,
+  key: 'jZh9eZuLQwUdEZ6FqDHmHqy4lYV6xWa5wV2iOuw1A7M=',
+  note: 'Any free text regarding the redemption',
+  callback: function(response, status) {
+    console.log(response);
+  }
+});
+```
 
 ### Payment APIs
 

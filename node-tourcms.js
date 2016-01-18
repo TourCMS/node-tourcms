@@ -524,6 +524,8 @@ TourCMS.prototype.showPromo = function(a) {
 
 // Bookings
 
+// Vouchers
+
 TourCMS.prototype.searchVouchers = function(a) {
 
   // Channel ID
@@ -556,12 +558,45 @@ TourCMS.prototype.searchVouchers = function(a) {
   // POST
   a.verb = 'POST';
 
+  this.makeRequest(a);
+}
+
+TourCMS.prototype.redeemVoucher = function(a) {
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = channelId;
+
+  // Voucher key to redeem (obtained from "Search Vouchers")
+  if(typeof a.key === "undefined")
+    a.key = '';
+
+  // Optionally add a note to the booking
+  if(typeof a.note === "undefined")
+    a.note = '';
+
+  // Build object that will be turned into XML
+  a.postData = ({
+    voucher: {
+      key: a.key,
+      note: a.note
+    }
+  });
+
+  // Set API path
+  a.path = '/c/voucher/redeem.xml';
+
+  // POST
+  a.verb = 'POST';
+
   /*
   a.processor = function(data, callback) {
     callback(data);
   }*/
 
   this.makeRequest(a);
+
 }
 
 TourCMS.prototype.generateSignature = function(path, channelId, verb, outboundTime, apiKey) {
