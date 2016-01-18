@@ -4,6 +4,7 @@ Node wrapper for the [TourCMS](http://www.tourcms.com/) [API](http://www.tourcms
 
 ## Table of contents
 
+
 * [Status](#status)
 * [Installation](#installation)
 * [Usage](#usage)
@@ -32,12 +33,21 @@ Node wrapper for the [TourCMS](http://www.tourcms.com/) [API](http://www.tourcms
     * [Get Booking Key Redirect](#get-booking-key-redirect)
     * [Start New Booking](#start-new-booking)
     * [Commit Booking](#commit-booking)
+    * [Update Booking](#update-booking)
+    * [Add note to Booking](#add-note-to-booking)
+    * [Cancel Booking](#cancel-booking)
+    * [Delete Booking](#delete-booking)
   * [Voucher APIs](#voucher-apis)
     * [Search Vouchers](#search-vouchers)
     * [Redeem Voucher](#redeem-voucher)
   * [Payment APIs](#payment-apis)
     * [Create Payment / Refund](#create-payment--refund)
     * [Create Spreedly Payment](#create-spreedly-payment)
+  * [Customer &amp; Enquiry APIs](#customer--enquiry-apis)
+    * [Show Customer](#show-customer)
+    * [Create Customer/Enquiry](#create-customerenquiry)
+    * [Search Enquiries](#search-enquiries)
+    * [Update Customer](#update-customer)
 
 ## Status
 
@@ -552,6 +562,6 @@ http://www.tourcms.com/support/api/mp/enquiry_search.php
 
 #### Update Customer
 
-Update some of the details on a customer record 
+Update some of the details on a customer record
 
 http://www.tourcms.com/support/api/mp/customer_update.php
