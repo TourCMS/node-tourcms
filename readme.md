@@ -612,3 +612,18 @@ TourCMS.searchEnquiries({
 Update some of the details on a customer record
 
 http://www.tourcms.com/support/api/mp/customer_update.php
+
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+```js
+TourCMS.updateCustomer({
+  channelId: 3930,
+  customer: {
+    customer_id: "12345",
+    firstname: "Joseph"
+  },
+  callback: function(response) {
+    console.log(response);
+  }
+});
+```

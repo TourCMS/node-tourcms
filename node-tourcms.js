@@ -861,6 +861,37 @@ TourCMS.prototype.searchEnquiries = function(a) {
 
 };
 
+// Update Customer
+// Create Enquiry
+TourCMS.prototype.updateCustomer = function(a) {
+
+  if(typeof a === "undefined")
+    a = {};
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.channelId;
+
+  // Enquiry object, create empty one if it doesn't exist
+  if(typeof a.customer === "undefined")
+    a.customer = {};
+
+  // Build object that will be turned into XML
+  a.postData = ({
+    enquiry: a.customer,
+  });
+
+  // Set API path
+  a.path = '/c/customer/update.xml';
+
+  // POST
+  a.verb = 'POST';
+
+  this.makeRequest(a);
+
+}
+
 
 TourCMS.prototype.generateSignature = function(path, channelId, verb, outboundTime, apiKey) {
 
