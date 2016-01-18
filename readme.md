@@ -478,6 +478,21 @@ TourCMS.commitBooking({
 
 http://www.tourcms.com/support/api/mp/booking_update.php
 
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+```js
+TourCMS.updateBooking({
+  channelId: 3930,
+  booking: {
+    booking_id: 1234,
+    customer_special_request: "Please can we have a ground floor room"
+  },
+  callback: function(response) {
+    console.log(response);
+  }
+});
+```
+
 #### Add note to Booking
 
 http://www.tourcms.com/support/api/mp/booking_note_new.php
