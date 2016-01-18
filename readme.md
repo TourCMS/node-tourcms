@@ -572,6 +572,23 @@ http://www.tourcms.com/support/api/mp/enquiry_create.php
 
 http://www.tourcms.com/support/api/mp/enquiry_search.php
 
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+The following example lists all enquiries made in the first two weeks of January.
+
+```js
+TourCMS.searchEnquiries({
+  channelId: 3930,
+  qs: {
+    made_date_start: "2016-01-01",
+    made_date_end: "2016-01-14"
+  },
+  callback: function(response) {
+    console.log(response);
+  }
+});
+```
+
 #### Update Customer
 
 Update some of the details on a customer record
