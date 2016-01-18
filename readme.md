@@ -425,6 +425,26 @@ Convert a temporary booking created with Start new booking into a live booking
 
 http://www.tourcms.com/support/api/mp/booking_commit_new.php
 
+#### Update Booking
+
+http://www.tourcms.com/support/api/mp/booking_update.php
+
+#### Add note to Booking
+
+http://www.tourcms.com/support/api/mp/booking_note_new.php
+
+#### Cancel Booking
+
+Cancel a non-temporary booking (to remove temporary bookings use "Delete booking")
+
+http://www.tourcms.com/support/api/mp/booking_cancel.php
+
+#### Delete Booking
+
+Delete a temporary booking
+
+http://www.tourcms.com/support/api/mp/booking_delete.php
+
 ### Voucher APIs
 
 http://www.tourcms.com/support/api/mp/voucher_redemption.php
@@ -511,3 +531,27 @@ TourCMS.createSpreedlyPayment({
   }
 });
 ```
+
+### Customer & Enquiry APIs
+
+#### Show Customer
+
+Show details on a specific customer
+
+http://www.tourcms.com/support/api/mp/customer_show.php
+
+#### Create Customer/Enquiry
+
+For agents/affiliates only, create a new customer & enquiry in an operators account
+
+http://www.tourcms.com/support/api/mp/enquiry_create.php
+
+#### Search Enquiries
+
+http://www.tourcms.com/support/api/mp/enquiry_search.php
+
+#### Update Customer
+
+Update some of the details on a customer record 
+
+http://www.tourcms.com/support/api/mp/customer_update.php
