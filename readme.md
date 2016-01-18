@@ -457,6 +457,23 @@ Convert a temporary booking created with Start new booking into a live booking
 
 http://www.tourcms.com/support/api/mp/booking_commit_new.php
 
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+The following example commits booking 1234 and suppresses sending of any email that would usually trigger
+
+```js
+TourCMS.commitBooking({
+  channelId: 3930,
+  booking: {
+    booking_id: 1234,
+    suppress_email: 1
+  },
+  callback: function(response) {
+    console.log(response);
+  }
+});
+```
+
 #### Update Booking
 
 http://www.tourcms.com/support/api/mp/booking_update.php
