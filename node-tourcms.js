@@ -816,6 +816,8 @@ TourCMS.prototype.deleteBooking = function(a) {
 
 }
 
+=======
+>>>>>>> 7e059eea6742cf9ca1626c5884cc864e633c6fc3
 // Vouchers
 
 // Search voucher
