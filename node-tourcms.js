@@ -523,7 +523,7 @@ TourCMS.prototype.showPromo = function(a) {
 
 // Bookings
 
-// Seach Tours
+// Seach Bookings
 TourCMS.prototype.searchBookings = function(a) {
 
   if(typeof a === 'undefined')
@@ -567,7 +567,6 @@ TourCMS.prototype.searchBookings = function(a) {
 };
 
 // Show booking
-// Show Tour
 TourCMS.prototype.showBooking = function(a) {
 
   // Channel ID
@@ -604,6 +603,34 @@ TourCMS.prototype.showBooking = function(a) {
 
   this.makeRequest(a);
 };
+
+// Get booking redirect url
+TourCMS.prototype.getBookingRedirectUrl = function(a) {
+
+  if(typeof a === "undefined") {
+    a = {};
+  }
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.channelId;
+
+  // Build object that will be turned into XML
+  a.postData = ({
+    url: {
+      response_url: a.responseUrl
+    }
+  });
+
+  // Set API path
+  a.path = '/c/booking/new/get_redirect_url.xml';
+
+  // POST
+  a.verb = 'POST';
+
+  this.makeRequest(a);
+}
 
 // Vouchers
 
@@ -733,34 +760,76 @@ TourCMS.prototype.createSpreedlyPayment = function(a) {
 
 }
 
-// Search voucher
-TourCMS.prototype.getBookingRedirectUrl = function(a) {
+// Customers
 
-  if(typeof a === "undefined") {
-    a = {};
-  }
+// Show Customer
+TourCMS.prototype.showCustomer = function(a) {
 
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
     a.channelId = this.channelId;
 
-  // Build object that will be turned into XML
-  a.postData = ({
-    url: {
-      response_url: a.responseUrl
-    }
-  });
+  a.path = '/c/customer/show.xml?customer_id=' + a.customerId;
 
-  // Set API path
-  a.path = '/c/booking/new/get_redirect_url.xml';
+  // Sanitise response, tours is an array if empty
+  a.processor = function(response, callback) {
 
-  // POST
-  a.verb = 'POST';
+    // Ensure we have an array of custom fields
+    if(typeof response.customer.custom_fields !== "undefined")
+      response.customer.custom_fields.field = [].concat(response.customer.custom_fields.field);
+    else
+      response.customer.custom_fields = {field:[]};
+
+    callback(response);
+
+  }
 
   this.makeRequest(a);
-}
+};
 
+// Seach Enquiries
+TourCMS.prototype.searchEnquiries = function(a) {
+
+  if(typeof a === 'undefined')
+    a = {};
+
+  // Convert/set search params
+  // If undefined
+  if(typeof a.qs === "undefined")
+    a.qs = {};
+
+  a.qs = querystring.stringify(a.qs);
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.channelId;
+
+  // Set API path
+  if(a.channelId==0)
+    a.path = '/p/enquiries/search.xml?' + a.qs;
+  else
+    a.path = '/c/enquiries/search.xml?' + a.qs;
+
+  // Sanitise response, total_enquiries_count always set
+  // Enquiries is an array if empty
+
+  a.processor = function(response, callback) {
+
+    // Ensure we have a total tour count
+    if(typeof response.total_enquiries_count === 'undefined')
+      response.total_enquiries_count = '0';
+
+    // Ensure we have an array of tours
+    response.enquiry = [].concat(response.enquiry);
+
+    callback(response);
+  }
+
+  this.makeRequest(a);
+
+};
 
 
 TourCMS.prototype.generateSignature = function(path, channelId, verb, outboundTime, apiKey) {

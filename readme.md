@@ -550,6 +550,18 @@ Show details on a specific customer
 
 http://www.tourcms.com/support/api/mp/customer_show.php
 
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+```js
+TourCMS.showCustomer({
+  channelId: 3930,
+  customerId: 3766892,
+  callback: function(response) {
+    console.log(response);
+  }
+});
+```
+
 #### Create Customer/Enquiry
 
 For agents/affiliates only, create a new customer & enquiry in an operators account
