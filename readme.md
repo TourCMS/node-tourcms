@@ -503,6 +503,23 @@ Cancel a non-temporary booking (to remove temporary bookings use "Delete booking
 
 http://www.tourcms.com/support/api/mp/booking_cancel.php
 
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+The following example cancels booking 8451 on Channel 3930 while adding a note explaining the reason.
+
+```js
+TourCMS.cancelBooking({
+  channelId: 3930,
+  booking: {
+    booking_id: 8451,
+    note: "Building Node wrapper"
+  },
+  callback: function(response) {
+    console.log(response);
+  }
+});
+```
+
 #### Delete Booking
 
 Delete a temporary booking
