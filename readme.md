@@ -4,7 +4,6 @@ Node wrapper for the [TourCMS](http://www.tourcms.com/) [API](http://www.tourcms
 
 ## Table of contents
 
-* [Table of contents](#table-of-contents)
 * [Status](#status)
 * [Installation](#installation)
 * [Usage](#usage)
