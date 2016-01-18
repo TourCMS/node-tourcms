@@ -632,6 +632,49 @@ TourCMS.prototype.getBookingRedirectUrl = function(a) {
   this.makeRequest(a);
 }
 
+// Start New Booking
+TourCMS.prototype.startNewBooking = function(a) {
+
+  if(typeof a === "undefined")
+    a = {};
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.channelId;
+
+  // Booking object, create empty one if it doesn't exist
+  if(typeof a.booking === "undefined")
+    a.booking = {};
+
+  // Build object that will be turned into XML
+  a.postData = ({
+    booking: a.booking,
+  });
+
+  // Set API path
+  a.path = '/c/booking/new/start.xml';
+
+  // POST
+  a.verb = 'POST';
+
+  // Sanitise response, custmers is an array
+  a.processor = function(response, callback) {
+
+    // Ensure we have an array of custom fields
+    if(typeof response.booking.customers !== "undefined")
+      response.booking.customers.customer = [].concat(response.booking.customers.customer);
+    else
+      response.booking.customers = {customer:[]};
+
+    callback(response);
+
+  }
+
+  this.makeRequest(a);
+
+}
+
 // Vouchers
 
 // Search voucher
@@ -862,7 +905,6 @@ TourCMS.prototype.searchEnquiries = function(a) {
 };
 
 // Update Customer
-// Create Enquiry
 TourCMS.prototype.updateCustomer = function(a) {
 
   if(typeof a === "undefined")
@@ -879,7 +921,7 @@ TourCMS.prototype.updateCustomer = function(a) {
 
   // Build object that will be turned into XML
   a.postData = ({
-    enquiry: a.customer,
+    customer: a.customer,
   });
 
   // Set API path

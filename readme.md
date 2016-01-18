@@ -429,6 +429,28 @@ Create a temporary booking, holding off stock for the customer
 
 http://www.tourcms.com/support/api/mp/booking_start_new.php
 
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+```js
+TourCMS.startNewBooking({
+  channelId: 3930,
+  booking: {
+    booking_key: "BOOKING_KEY_HERE",
+    total_customers: 1,
+    components: {
+      component: [
+        {
+          component_key: "COMPONENT_KEY_HERE",
+        }
+      ]
+    }
+  },
+  callback: function(response) {
+    console.log(response);
+  }
+});
+```
+
 #### Commit Booking
 
 Convert a temporary booking created with Start new booking into a live booking
