@@ -705,6 +705,36 @@ TourCMS.prototype.commitBooking = function(a) {
 
 }
 
+// Commit Booking
+TourCMS.prototype.updateBooking = function(a) {
+
+  if(typeof a === "undefined")
+    a = {};
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.channelId;
+
+  // Booking object, create empty one if it doesn't exist
+  if(typeof a.booking === "undefined")
+    a.booking = {};
+
+  // Build object that will be turned into XML
+  a.postData = ({
+    booking: a.booking,
+  });
+
+  // Set API path
+  a.path = '/c/booking/update.xml';
+
+  // POST
+  a.verb = 'POST';
+
+  this.makeRequest(a);
+
+}
+
 // Vouchers
 
 // Search voucher
