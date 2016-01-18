@@ -331,9 +331,33 @@ TourCMS.showPromo({
 
 http://www.tourcms.com/support/api/mp/booking_search.php
 
+The following example searches for bookings made in the first two weeks of January 2016.
+
+```js
+TourCMS.searchBookings({
+  channelId: 3930,
+  qs: {
+    made_date_start: "2016-01-01",
+    made_date_end: "2016-01-14"
+  },
+  callback: function(response) {
+    console.log(response);
+  }
+});
+```
+
 #### Show booking
 
 http://www.tourcms.com/support/api/mp/booking_show.php
+
+```js
+TourCMS.showBooking({
+  bookingId: 8449,
+  callback: function(response) {
+    console.log(response.booking);
+  }
+});
+```
 
 #### Get Booking Key Redirect
 

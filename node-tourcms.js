@@ -75,12 +75,11 @@ TourCMS.prototype.makeRequest = function(a) {
     var concatStream = concat(apiResponded);
     response.pipe(concatStream);
 
-    // TODO: Handle errors
+    // Handle errors
     response.on("error", console.log);
 
     // Process API response
     function apiResponded(apiResponse) {
-
       // Convert XML to JS object
       var parser = new xml2js.Parser({explicitArray:false});
       parser.parseString(apiResponse, function (err, result) {
@@ -205,7 +204,7 @@ TourCMS.prototype.searchTours = function(a) {
       response.total_tour_count = '0';
 
     // Ensure we have an array of tours
-    response.tour = [].concat[response.tour];
+    response.tour = [].concat(response.tour);
 
     callback(response);
   }
@@ -242,7 +241,7 @@ TourCMS.prototype.listTours = function(a) {
   a.processor = function(response, callback) {
 
     // Ensure we have an array of tours
-    response.tour = [].concat[response.tour];
+    response.tour = [].concat(response.tour);
 
     callback(response);
 
@@ -523,6 +522,88 @@ TourCMS.prototype.showPromo = function(a) {
 
 
 // Bookings
+
+// Seach Tours
+TourCMS.prototype.searchBookings = function(a) {
+
+  if(typeof a === 'undefined')
+    a = {};
+
+  // Convert/set search params
+  // If undefined
+  if(typeof a.qs === "undefined")
+    a.qs = {};
+
+  a.qs = querystring.stringify(a.qs);
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.channelId;
+
+  // Set API path
+  if(a.channelId==0)
+    a.path = '/p/bookings/search.xml?' + a.qs;
+  else
+    a.path = '/c/bookings/search.xml?' + a.qs;
+
+  // Sanitise response, total_tour_count always set
+  // Tours is an array if empty
+
+  a.processor = function(response, callback) {
+
+    // Ensure we have a total tour count
+    if(typeof response.total_bookings_count === 'undefined')
+      response.total_bookings_count = '0';
+
+    // Ensure we have an array of tours
+    response.booking = [].concat(response.booking);
+
+    callback(response);
+  }
+
+  this.makeRequest(a);
+
+};
+
+// Show booking
+// Show Tour
+TourCMS.prototype.showBooking = function(a) {
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.channelId;
+
+  a.path = '/c/booking/show.xml?booking_id=' + a.bookingId;
+
+  // Sanitise response, tours is an array if empty
+  a.processor = function(response, callback) {
+
+    // Ensure we have an array of customers
+    if(typeof response.booking.customers !== "undefined")
+      response.booking.customers.customer = [].concat(response.booking.customers.customer);
+    else
+      response.booking.customers = {customer:[]};
+
+  // Ensure we have an array of payments
+  if(typeof response.booking.payments !== "undefined")
+    response.booking.payments.payment = [].concat(response.booking.payments.payment);
+  else
+    response.booking.payments = {payment:[]};
+
+    // Ensure we have an array of custom fields
+    if(typeof response.booking.custom_fields !== "undefined")
+      response.booking.custom_fields.field = [].concat(response.booking.custom_fields.field);
+    else
+      response.booking.custom_fields = {field:[]};
+
+    callback(response);
+
+  }
+
+  this.makeRequest(a);
+};
 
 // Vouchers
 
