@@ -2,6 +2,44 @@
 
 Node wrapper for the [TourCMS](http://www.tourcms.com/) [API](http://www.tourcms.com/support/api/mp/).
 
+## Table of contents
+
+- [node-tourcms](#)
+	- [Status](#)
+	- [Installation](#)
+	- [Usage](#)
+	- [API methods](#)
+		- [General / Housekeeping APIs](#)
+			- [API Rate Limit Status](#)
+			- [Generic API request](#)
+		- [Channel APIs](#)
+			- [List Channels](#)
+			- [Show Channel](#)
+			- [Channel Performance](#)
+		- [Tour (Product) APIs](#)
+			- [Search Tours](#)
+			- [List Tours](#)
+			- [Show Tour](#)
+			- [Update Tour](#)
+			- [Show Tour Dates and Deals](#)
+			- [Departures Overview](#)
+			- [Show Departure](#)
+			- [Update Departure](#)
+			- [Check Tour Availability](#)
+			- [Show Promo Code](#)
+		- [Booking APIs](#)
+			- [Search bookings](#)
+			- [Show booking](#)
+			- [Get Booking Key Redirect](#)
+			- [Start New Booking](#)
+			- [Commit Booking](#)
+		- [Voucher APIs](#)
+			- [Search Vouchers](#)
+			- [Redeem Voucher](#)
+		- [Payment APIs](#)
+			- [Create Payment / Refund](#)
+			- [Create Spreedly Payment](#)
+
 ## Status
 
 API list partially completed, consider early/beta code.
