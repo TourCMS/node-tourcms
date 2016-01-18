@@ -404,8 +404,40 @@ Store details of a new payment on a booking sales ledger. Allows Tour Operators 
 
 http://www.tourcms.com/support/api/mp/payment_create.php
 
+This example adds a payment of value 10 in the Channel default currency to Booking 8400.
+
+```js
+TourCMS.createPayment({
+  channelId: 3930,
+  payment: {
+    booking_id: "8400",
+    payment_value: "10",
+  },
+  callback: function(response, status) {
+    console.log(response);
+  }
+});
+```
+
 #### Create Spreedly Payment
 
-Spreedly specific version of the previous method.
+Spreedly specific version of the previous method, to call this method you should have created a Spreedly payment token representing the card you wish to charge.
 
 http://www.tourcms.com/support/api/mp/spreedly_payment_create.php
+
+This example adds a payment of value 10 in the Channel default currency to Booking 8400 using the Spreedly payment method represented by SPREEDLY_PAYMENT_METHOD_TOKEN.
+
+```js
+TourCMS.createSpreedlyPayment({
+  channelId: 3930,
+  payment: {
+    spreedly_payment_method: "SPREEDLY_PAYMENT_METHOD_TOKEN",
+    booking_id: "8400",
+    payment_value: "10",
+    currency: "GBP"
+  },
+  callback: function(response, status) {
+    console.log(response);
+  }
+});
+```

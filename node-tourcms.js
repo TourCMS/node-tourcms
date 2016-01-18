@@ -526,6 +526,7 @@ TourCMS.prototype.showPromo = function(a) {
 
 // Vouchers
 
+// Search voucher
 TourCMS.prototype.searchVouchers = function(a) {
 
   // Channel ID
@@ -561,6 +562,7 @@ TourCMS.prototype.searchVouchers = function(a) {
   this.makeRequest(a);
 }
 
+// Redeem voucher
 TourCMS.prototype.redeemVoucher = function(a) {
 
   // Channel ID
@@ -590,14 +592,67 @@ TourCMS.prototype.redeemVoucher = function(a) {
   // POST
   a.verb = 'POST';
 
-  /*
-  a.processor = function(data, callback) {
-    callback(data);
-  }*/
+  this.makeRequest(a);
+
+}
+
+// Payments
+
+// Create payment
+TourCMS.prototype.createPayment = function(a) {
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = channelId;
+
+  // Payment object, create empty one if it doesn't exist
+  if(typeof a.payment === "undefined")
+    a.payment = {};
+
+  // Build object that will be turned into XML
+  a.postData = ({
+    payment: a.payment,
+  });
+
+  // Set API path
+  a.path = '/c/booking/payment/new.xml';
+
+  // POST
+  a.verb = 'POST';
 
   this.makeRequest(a);
 
 }
+
+// Create payment
+TourCMS.prototype.createSpreedlyPayment = function(a) {
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = channelId;
+
+  // Payment object, create empty one if it doesn't exist
+  if(typeof a.payment === "undefined")
+    a.payment = {};
+
+  // Build object that will be turned into XML
+  a.postData = ({
+    payment: a.payment,
+  });
+
+  // Set API path
+  a.path = '/c/booking/payment/spreedly/new.xml';
+
+  // POST
+  a.verb = 'POST';
+
+  this.makeRequest(a);
+
+}
+
+
 
 TourCMS.prototype.generateSignature = function(path, channelId, verb, outboundTime, apiKey) {
 
