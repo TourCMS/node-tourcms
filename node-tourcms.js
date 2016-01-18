@@ -613,7 +613,7 @@ TourCMS.prototype.searchVouchers = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = channelId;
+    a.channelId = this.channelId;
 
   // Voucher string to search
   if(typeof a.voucherString === "undefined")
@@ -649,7 +649,7 @@ TourCMS.prototype.redeemVoucher = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = channelId;
+    a.channelId = this.channelId;
 
   // Voucher key to redeem (obtained from "Search Vouchers")
   if(typeof a.key === "undefined")
@@ -685,7 +685,7 @@ TourCMS.prototype.createPayment = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = channelId;
+    a.channelId = this.channelId;
 
   // Payment object, create empty one if it doesn't exist
   if(typeof a.payment === "undefined")
@@ -712,7 +712,7 @@ TourCMS.prototype.createSpreedlyPayment = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = channelId;
+    a.channelId = this.channelId;
 
   // Payment object, create empty one if it doesn't exist
   if(typeof a.payment === "undefined")
@@ -731,6 +731,34 @@ TourCMS.prototype.createSpreedlyPayment = function(a) {
 
   this.makeRequest(a);
 
+}
+
+// Search voucher
+TourCMS.prototype.getBookingRedirectUrl = function(a) {
+
+  if(typeof a === "undefined") {
+    a = {};
+  }
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.channelId;
+
+  // Build object that will be turned into XML
+  a.postData = ({
+    url: {
+      response_url: a.responseUrl
+    }
+  });
+
+  // Set API path
+  a.path = '/c/booking/new/get_redirect_url.xml';
+
+  // POST
+  a.verb = 'POST';
+
+  this.makeRequest(a);
 }
 
 

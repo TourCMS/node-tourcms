@@ -404,6 +404,15 @@ Only for use by Tour Operators (mandatory step), not required when the API is be
 
 http://www.tourcms.com/support/api/mp/booking_getkey.php
 
+```js
+TourCMS.getBookingRedirectUrl({
+  responseUrl: "http://www.example.com",
+  callback: function(response) {
+    console.log(response);
+  }
+});
+```
+
 #### Start New Booking
 
 Create a temporary booking, holding off stock for the customer
