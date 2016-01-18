@@ -765,6 +765,27 @@ TourCMS.prototype.cancelBooking = function(a) {
 
 }
 
+// Delete Booking
+TourCMS.prototype.deleteBooking = function(a) {
+
+  if(typeof a === "undefined")
+    a = {};
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.channelId;
+
+  // Set API path
+  a.path = '/c/booking/delete.xml?booking_id=' + a.bookingId;
+
+  // POST
+  a.verb = 'POST';
+
+  this.makeRequest(a);
+
+}
+
 // Vouchers
 
 // Search voucher

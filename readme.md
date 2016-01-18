@@ -526,6 +526,18 @@ Delete a temporary booking
 
 http://www.tourcms.com/support/api/mp/booking_delete.php
 
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+```js
+TourCMS.deleteBooking({
+  channelId: 3930,
+  bookingId: 8452,
+  callback: function(response) {
+    console.log(response);
+  }
+});
+```
+
 ### Voucher APIs
 
 http://www.tourcms.com/support/api/mp/voucher_redemption.php
