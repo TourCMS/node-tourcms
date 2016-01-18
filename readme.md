@@ -497,6 +497,26 @@ TourCMS.updateBooking({
 
 http://www.tourcms.com/support/api/mp/booking_note_new.php
 
+The following example will add a note "Building Node wrapper" of type AUDIT to booking 8451 on Channel 3930.
+
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+```js
+TourCMS.addNoteToBooking({
+  channelId: 3930,
+  booking: {
+    booking_id: 8451,
+    note: {
+        type: "AUDIT",
+        text: "Building Node wrapper"
+    }
+  },
+  callback: function(response) {
+    console.log(response);
+  }
+});
+```
+
 #### Cancel Booking
 
 Cancel a non-temporary booking (to remove temporary bookings use "Delete booking")
