@@ -256,12 +256,9 @@ TourCMS.showTourDatesDeals({
   qs: {
     has_offer: 1,
     distinct_start_dates: 1
-  },
+},
   callback: function(response) {
-    // Loop through and output each component
-    response.available_components.component.forEach(function(item) {
-      console.log(item);
-    });
+    console.log("Found " + response.dates_and_prices.date.length + " dates.");
   }
 });
 ```
