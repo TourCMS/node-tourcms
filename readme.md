@@ -571,7 +571,10 @@ The following example matches bookings with a voucher string, booking ID or agen
 TourCMS.searchVouchers({
   channelId: 3930,
   voucherString: "VOUCHER_STRING_HERE",
-  wideDates: 1
+  wideDates: 1,
+	callback: function(response) {
+		console.log("Found " + response.booking.length + " bookings")
+	}
 });
 ```
 
