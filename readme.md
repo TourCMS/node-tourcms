@@ -270,8 +270,6 @@ Includes the running tours, details on their departure including number of booki
 
 If a `channelId` is not provided, the one passed in the initial configuration will be used.
 
-http://www.tourcms.com/support/api/mp/tour_datesprices_dep_manage_show.php
-
 ```js
 TourCMS.getDeparturesOverview({
   date: new Date(),
