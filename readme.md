@@ -194,7 +194,7 @@ List Tours, quicker and not pagenated versus Search Tours, however returns less 
 
 If a `channelId` is not provided, the one passed in the initial configuration will be used.
 
-http://www.tourcms.com/support/api/mp/tour_list.php
+http://www.tourcms.com/support/api/mp/tours_list.php
 
 ```js
 TourCMS.listTours({
