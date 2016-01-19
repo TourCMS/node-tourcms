@@ -4,8 +4,6 @@ Node wrapper for the [TourCMS](http://www.tourcms.com/) [API](http://www.tourcms
 
 ## Table of contents
 
-
-* [Status](#status)
 * [Installation](#installation)
 * [Usage](#usage)
 * [API methods](#api-methods)
@@ -48,10 +46,6 @@ Node wrapper for the [TourCMS](http://www.tourcms.com/) [API](http://www.tourcms
     * [Create Customer/Enquiry](#create-customerenquiry)
     * [Search Enquiries](#search-enquiries)
     * [Update Customer](#update-customer)
-
-## Status
-
-API list partially completed, consider early/beta code.
 
 ## Installation
 
