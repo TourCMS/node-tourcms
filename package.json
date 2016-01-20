@@ -6,7 +6,7 @@
     "api"
   ],
   "homepage": "https://github.com/tourcms/node-tourcms",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "TourCMS <support@tourcms.com> (http://www.tourcms.com)",
   "contributors": [
     "Paul Slugocki <paul.slugocki@tourcms.com> (https://github.com/paulslugocki)"
@@ -16,12 +16,37 @@
     "type": "git",
     "url": "https://github.com/tourcms/node-tourcms.git"
   },
+  "scripts": {
+    "test": "npm run lint && mocha",
+    "lint": "jshint test/*.js node-tourcms.js && echo Lint passed."
+  },
   "dependencies": {
     "xml2js": "0.4.x",
     "concat-stream": "1.4.x"
   },
+  "devDependencies": {
+    "jshint": "^2.6.0",
+    "mocha": "^2.1.0"
+  },
   "engines" : {
       "node" : "*"
+  },
+  "jshintConfig": {
+    "boss": true,
+    "node": true,
+    "strict": true,
+    "newcap": false,
+    "undef": true,
+    "unused": true,
+    "onecase": true,
+    "lastsemic": true,
+    "indent": 2,
+    "globals": {
+      "escape": true,
+      "describe": true,
+      "it": true,
+      "before": true
+    }
   },
   "license": "MIT"
 }

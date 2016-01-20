@@ -20,7 +20,7 @@ function TourCMS(options) {
     channels: []
   };
 
-  if(typeof this.options !== 'undefined') {
+  if(typeof options !== 'undefined') {
     // Process config
     if(typeof options.apiKey !== 'undefined')
       this.options.apiKey = options.apiKey;
