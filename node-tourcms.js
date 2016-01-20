@@ -1,3 +1,4 @@
+'use strict';
 
 var https = require('https');
 var crypto = require('crypto');
@@ -38,6 +39,8 @@ function TourCMS(options) {
 // Call the API
 TourCMS.prototype.makeRequest = function(a) {
 
+  var apiParams = "";
+
   // Sensible defaults
   if(typeof a.channelId == "undefined")
     a.channelId = 0;
@@ -45,12 +48,10 @@ TourCMS.prototype.makeRequest = function(a) {
   if(typeof a.verb == "undefined")
     a.verb = 'GET';
 
-  if(typeof a.postData == "undefined") {
-    var apiParams = "";
-  } else {
+  if(typeof a.postData !== "undefined") {
     // Convert object into XML
     var builder = new xml2js.Builder();
-    var apiParams = builder.buildObject(a.postData);
+    apiParams = builder.buildObject(a.postData);
   }
 
   // Get the current time
@@ -69,7 +70,7 @@ TourCMS.prototype.makeRequest = function(a) {
       'Content-type': 'text/xml;charset="utf-8"',
       'Content-length': apiParams.length
     }
-  }
+  };
 
   var req = https.request(options, function(response) {
 
@@ -170,7 +171,7 @@ TourCMS.prototype.channelPerformance = function(a) {
     a.path = '/p/channels/performance.xml';
 
     this.makeRequest(a);
-}
+};
 
 // Tours
 
@@ -193,7 +194,7 @@ TourCMS.prototype.searchTours = function(a) {
     a.channelId = this.options.channelId;
 
   // Set API path
-  if(a.channelId==0)
+  if(parseInt(a.channelId)===0)
     a.path = '/p/tours/search.xml?' + a.qs;
   else
     a.path = '/c/tours/search.xml?' + a.qs;
@@ -211,7 +212,7 @@ TourCMS.prototype.searchTours = function(a) {
     response.tour = [].concat(response.tour);
 
     callback(response);
-  }
+  };
 
   this.makeRequest(a);
 
@@ -236,7 +237,7 @@ TourCMS.prototype.listTours = function(a) {
     a.channelId = this.options.channelId;
 
   // Set API path
-  if(a.channelId==0)
+  if(a.channelId===0)
     a.path = '/p/tours/list.xml?' + a.qs;
   else
     a.path = '/c/tours/list.xml?' + a.qs;
@@ -249,7 +250,7 @@ TourCMS.prototype.listTours = function(a) {
 
     callback(response);
 
-  }
+  };
 
   this.makeRequest(a);
 };
@@ -264,14 +265,14 @@ TourCMS.prototype.showTour = function(a) {
 
   // Add in the TourId in if provided separately
   if(typeof a.tourId !== 'undefined') {
-    a.qs['id'] = a.tourId;
+    a.qs.id = a.tourId;
 
   }
 
   // Fix id if passed in to qs directly as tourId
   if(typeof a.qs.tourId !== 'undefined') {
-    a.qs['id'] = a.qs.tourId;
-    delete a.qs['tourId'];
+    a.qs.id = a.qs.tourId;
+    delete a.qs.tourId;
   }
 
   a.qs = querystring.stringify(a.qs);
@@ -323,12 +324,12 @@ TourCMS.prototype.showTourDatesDeals = function(a) {
 
   // Add in the TourId in if provided separately
   if(typeof a.tourId !== 'undefined')
-    a.qs['id'] = a.tourId;
+    a.qs.id = a.tourId;
 
   // Fix id if passed in to qs directly as tourId
   if(typeof a.qs.tourId !== 'undefined') {
-    a.qs['id'] = a.qs.tourId;
-    delete a.qs['tourId'];
+    a.qs.id = a.qs.tourId;
+    delete a.qs.tourId;
   }
 
   a.qs = querystring.stringify(a.qs);
@@ -356,7 +357,7 @@ TourCMS.prototype.showTourDatesDeals = function(a) {
     response.dates_and_prices.date = [].concat(response.dates_and_prices.date);
 
     callback(response);
-  }
+  };
 
   this.makeRequest(a);
 };
@@ -368,7 +369,7 @@ TourCMS.prototype.getDeparturesOverview = function(a) {
     a.channelId = this.options.channelId;
 
   // Build qyery string
-  params = {};
+  var params = {};
 
   if(typeof a.date !== 'undefined')
     params.date = this.toTourcmsDate(a.date);
@@ -399,7 +400,7 @@ TourCMS.prototype.getDeparturesOverview = function(a) {
 
     // Check each tour has an array of departures
     response.tour.forEach(function(tour) {
-      if(tour.departures == '')
+      if(tour.departures === '')
         tour.departures = {departure:[]};
       else
         tour.departures.departure = [tour.departures.departure].concat();
@@ -461,13 +462,13 @@ TourCMS.prototype.checkTourAvailability = function(a) {
 
   // Add in the TourId in if provided separately
   if(typeof a.tourId !== 'undefined') {
-    a.qs['id'] = a.tourId;
+    a.qs.id = a.tourId;
   }
 
   // Fix id if passed in to qs directly as tourId
   if(typeof a.qs.tourId !== 'undefined') {
-    a.qs['id'] = a.qs.tourId;
-    delete a.qs['tourId'];
+    a.qs.id = a.qs.tourId;
+    delete a.qs.tourId;
   }
 
   a.qs = querystring.stringify(a.qs);
@@ -546,7 +547,7 @@ TourCMS.prototype.searchBookings = function(a) {
     a.channelId = this.options.channelId;
 
   // Set API path
-  if(a.channelId==0)
+  if(parseInt(a.channelId)===0)
     a.path = '/p/bookings/search.xml?' + a.qs;
   else
     a.path = '/c/bookings/search.xml?' + a.qs;
@@ -564,7 +565,7 @@ TourCMS.prototype.searchBookings = function(a) {
     response.booking = [].concat(response.booking);
 
     callback(response);
-  }
+  };
 
   this.makeRequest(a);
 
@@ -603,7 +604,7 @@ TourCMS.prototype.showBooking = function(a) {
 
     callback(response);
 
-  }
+  };
 
   this.makeRequest(a);
 };
@@ -634,7 +635,7 @@ TourCMS.prototype.getBookingRedirectUrl = function(a) {
   a.verb = 'POST';
 
   this.makeRequest(a);
-}
+};
 
 // Start New Booking
 TourCMS.prototype.startNewBooking = function(a) {
@@ -673,11 +674,11 @@ TourCMS.prototype.startNewBooking = function(a) {
 
     callback(response);
 
-  }
+  };
 
   this.makeRequest(a);
 
-}
+};
 
 // Commit Booking
 TourCMS.prototype.commitBooking = function(a) {
@@ -707,7 +708,7 @@ TourCMS.prototype.commitBooking = function(a) {
 
   this.makeRequest(a);
 
-}
+};
 
 // Update Booking
 TourCMS.prototype.updateBooking = function(a) {
@@ -737,7 +738,7 @@ TourCMS.prototype.updateBooking = function(a) {
 
   this.makeRequest(a);
 
-}
+};
 
 // Add Note To Booking
 TourCMS.prototype.addNoteToBooking = function(a) {
@@ -767,7 +768,7 @@ TourCMS.prototype.addNoteToBooking = function(a) {
 
   this.makeRequest(a);
 
-}
+};
 
 // Cancel Booking
 TourCMS.prototype.cancelBooking = function(a) {
@@ -797,7 +798,7 @@ TourCMS.prototype.cancelBooking = function(a) {
 
   this.makeRequest(a);
 
-}
+};
 
 // Delete Booking
 TourCMS.prototype.deleteBooking = function(a) {
@@ -818,7 +819,7 @@ TourCMS.prototype.deleteBooking = function(a) {
 
   this.makeRequest(a);
 
-}
+};
 
 // Vouchers
 
@@ -847,7 +848,7 @@ TourCMS.prototype.searchVouchers = function(a) {
   }
 
   // Set API path
-  if(a.channelId==0)
+  if(parseInt(a.channelId)===0)
     a.path = '/p/voucher/search.xml';
   else
     a.path = '/c/voucher/search.xml';
@@ -856,7 +857,7 @@ TourCMS.prototype.searchVouchers = function(a) {
   a.verb = 'POST';
 
   this.makeRequest(a);
-}
+};
 
 // Redeem voucher
 TourCMS.prototype.redeemVoucher = function(a) {
@@ -890,7 +891,7 @@ TourCMS.prototype.redeemVoucher = function(a) {
 
   this.makeRequest(a);
 
-}
+};
 
 // Payments
 
@@ -919,7 +920,7 @@ TourCMS.prototype.createPayment = function(a) {
 
   this.makeRequest(a);
 
-}
+};
 
 // Create payment
 TourCMS.prototype.createSpreedlyPayment = function(a) {
@@ -946,7 +947,7 @@ TourCMS.prototype.createSpreedlyPayment = function(a) {
 
   this.makeRequest(a);
 
-}
+};
 
 // Customers
 
@@ -971,7 +972,7 @@ TourCMS.prototype.showCustomer = function(a) {
 
     callback(response);
 
-  }
+  };
 
   this.makeRequest(a);
 };
@@ -1004,7 +1005,7 @@ TourCMS.prototype.createEnquiry = function(a) {
 
   this.makeRequest(a);
 
-}
+};
 
 // Seach Enquiries
 TourCMS.prototype.searchEnquiries = function(a) {
@@ -1025,7 +1026,7 @@ TourCMS.prototype.searchEnquiries = function(a) {
     a.channelId = this.options.channelId;
 
   // Set API path
-  if(a.channelId==0)
+  if(parseInt(a.channelId)===0)
     a.path = '/p/enquiries/search.xml?' + a.qs;
   else
     a.path = '/c/enquiries/search.xml?' + a.qs;
@@ -1043,7 +1044,7 @@ TourCMS.prototype.searchEnquiries = function(a) {
     response.enquiry = [].concat(response.enquiry);
 
     callback(response);
-  }
+  };
 
   this.makeRequest(a);
 
@@ -1077,7 +1078,7 @@ TourCMS.prototype.updateCustomer = function(a) {
 
   this.makeRequest(a);
 
-}
+};
 
 
 TourCMS.prototype.generateSignature = function(path, channelId, verb, outboundTime, apiKey) {
@@ -1092,13 +1093,13 @@ TourCMS.prototype.generateSignature = function(path, channelId, verb, outboundTi
 // Generate the current Unix Timestamp (PHP style)
 TourCMS.prototype.generateTime = function() {
   return Math.floor(new Date().getTime() / 1000);
-}
+};
 
 // Convert a JS date to the format TourCMS uses
 // YYYY-MM-DD
 TourCMS.prototype.toTourcmsDate = function(date) {
   return date.getFullYear() + '-' + ('0' + (date.getMonth()+1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
-}
+};
 
 // URL encode to match PHP
 TourCMS.prototype.rawurlencode = function(str) {
