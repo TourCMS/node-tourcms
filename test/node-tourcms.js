@@ -3,7 +3,7 @@
 var assert = require('assert');
 var TourCMS = require('../node-tourcms.js');
 
-describe('Twitter', function() {
+describe('TourCMS', function() {
 
   describe('Constructor', function() {
 
