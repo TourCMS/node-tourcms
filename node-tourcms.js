@@ -8,24 +8,28 @@ var xml2js = require('xml2js');
 
 // Constructor
 
-function TourCMS(config) {
+function TourCMS(options) {
 
-// Initialising instance properties
-this.hostname = 'api.tourcms.com';
-this.apiKey = '';
-this.marketplaceId = 0;
-this.channelId = 0;
-this.channels = [];
+  // Merge the default options with the client submitted options
+  this.options = {
+    hostname: 'api.tourcms.com',
+    apiKey: '',
+    marketplaceId: 0,
+    channelId: 0,
+    channels: []
+  };
 
-// Process config
-if(typeof config.apiKey !== 'undefined')
-  this.apiKey = config.apiKey;
+  if(typeof this.options !== 'undefined') {
+    // Process config
+    if(typeof options.apiKey !== 'undefined')
+      this.options.apiKey = options.apiKey;
 
-if(typeof config.marketplaceId !== 'undefined')
-  this.marketplaceId = config.marketplaceId;
+    if(typeof options.marketplaceId !== 'undefined')
+      this.options.marketplaceId = options.marketplaceId;
 
-if(typeof config.channelId !== 'undefined')
-  this.channelId = config.channelId;
+    if(typeof options.channelId !== 'undefined')
+      this.options.channelId = options.channelId;
+  }
 
 }
 
@@ -53,15 +57,15 @@ TourCMS.prototype.makeRequest = function(a) {
   var outboundTime = this.generateTime();
 
   // Generate the signature
-  var signature = this.generateSignature(a.path, a.channelId, a.verb, outboundTime, this.apiKey);
+  var signature = this.generateSignature(a.path, a.channelId, a.verb, outboundTime, this.options.apiKey);
 
   var options = {
     method: a.verb,
-    hostname: this.hostname,
+    hostname: this.options.hostname,
     path: a.path,
     headers: {
       'x-tourcms-date': outboundTime,
-      'Authorization': 'TourCMS ' + a.channelId + ':' + this.marketplaceId + ':' + signature,
+      'Authorization': 'TourCMS ' + a.channelId + ':' + this.options.marketplaceId + ':' + signature,
       'Content-type': 'text/xml;charset="utf-8"',
       'Content-length': apiParams.length
     }
@@ -114,7 +118,7 @@ if(typeof a === 'undefined')
 a = {};
 
 if(typeof a.channelId === 'undefined')
-  a.channelId = this.channelId;
+  a.channelId = this.options.channelId;
 
 
   a.path = '/api/rate_limit_status.xml';
@@ -148,7 +152,7 @@ TourCMS.prototype.showChannel = function(a) {
       a = {};
 
     if(typeof a.channelId === 'undefined')
-      a.channelId = this.channelId;
+      a.channelId = this.options.channelId;
 
     a.path = '/c/channel/show.xml';
 
@@ -161,7 +165,7 @@ TourCMS.prototype.channelPerformance = function(a) {
       a = {};
 
     if(typeof a.channelId === 'undefined')
-      a.channelId = this.channelId;
+      a.channelId = this.options.channelId;
 
     a.path = '/p/channels/performance.xml';
 
@@ -186,7 +190,7 @@ TourCMS.prototype.searchTours = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Set API path
   if(a.channelId==0)
@@ -229,7 +233,7 @@ TourCMS.prototype.listTours = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Set API path
   if(a.channelId==0)
@@ -275,7 +279,7 @@ TourCMS.prototype.showTour = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   a.path = '/c/tour/show.xml?' + a.qs;
 
@@ -289,7 +293,7 @@ TourCMS.prototype.updateTour = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Tour ID
   // If tour_id is provided as tourId, fix
@@ -332,7 +336,7 @@ TourCMS.prototype.showTourDatesDeals = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   a.path = '/c/tour/datesprices/datesndeals/search.xml?' + a.qs;
 
@@ -361,7 +365,7 @@ TourCMS.prototype.showTourDatesDeals = function(a) {
 TourCMS.prototype.getDeparturesOverview = function(a) {
 
   if(typeof a.channelId === 'undefined')
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Build qyery string
   params = {};
@@ -412,7 +416,7 @@ TourCMS.prototype.getDeparturesOverview = function(a) {
 TourCMS.prototype.showDeparture = function(a) {
 
   if(typeof a.channelId === 'undefined')
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   a.path = '/c/tour/datesprices/dep/manage/show.xml?id=' + a.tourId + '&departure_id=' + a.departureId;
 
@@ -435,7 +439,7 @@ TourCMS.prototype.showDeparture = function(a) {
 TourCMS.prototype.updateDeparture = function(a) {
 
   if(typeof a.channelId === 'undefined')
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   a.postData = {departure: a.departure};
 
@@ -471,7 +475,7 @@ TourCMS.prototype.checkTourAvailability = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Sanitise response
   // Ensure we have an available_components.component array
@@ -512,7 +516,7 @@ TourCMS.prototype.showPromo = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   a.path = '/c/promo/show.xml?promo_code=' + a.promo;
 
@@ -539,7 +543,7 @@ TourCMS.prototype.searchBookings = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Set API path
   if(a.channelId==0)
@@ -572,7 +576,7 @@ TourCMS.prototype.showBooking = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   a.path = '/c/booking/show.xml?booking_id=' + a.bookingId;
 
@@ -614,7 +618,7 @@ TourCMS.prototype.getBookingRedirectUrl = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Build object that will be turned into XML
   a.postData = ({
@@ -641,7 +645,7 @@ TourCMS.prototype.startNewBooking = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Booking object, create empty one if it doesn't exist
   if(typeof a.booking === "undefined")
@@ -684,7 +688,7 @@ TourCMS.prototype.commitBooking = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Booking object, create empty one if it doesn't exist
   if(typeof a.booking === "undefined")
@@ -714,7 +718,7 @@ TourCMS.prototype.updateBooking = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Booking object, create empty one if it doesn't exist
   if(typeof a.booking === "undefined")
@@ -744,7 +748,7 @@ TourCMS.prototype.addNoteToBooking = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Booking object, create empty one if it doesn't exist
   if(typeof a.booking === "undefined")
@@ -774,7 +778,7 @@ TourCMS.prototype.cancelBooking = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Booking object, create empty one if it doesn't exist
   if(typeof a.booking === "undefined")
@@ -804,7 +808,7 @@ TourCMS.prototype.deleteBooking = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Set API path
   a.path = '/c/booking/delete.xml?booking_id=' + a.bookingId;
@@ -824,7 +828,7 @@ TourCMS.prototype.searchVouchers = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Voucher string to search
   if(typeof a.voucherString === "undefined")
@@ -860,7 +864,7 @@ TourCMS.prototype.redeemVoucher = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Voucher key to redeem (obtained from "Search Vouchers")
   if(typeof a.key === "undefined")
@@ -896,7 +900,7 @@ TourCMS.prototype.createPayment = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Payment object, create empty one if it doesn't exist
   if(typeof a.payment === "undefined")
@@ -923,7 +927,7 @@ TourCMS.prototype.createSpreedlyPayment = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Payment object, create empty one if it doesn't exist
   if(typeof a.payment === "undefined")
@@ -952,7 +956,7 @@ TourCMS.prototype.showCustomer = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   a.path = '/c/customer/show.xml?customer_id=' + a.customerId;
 
@@ -981,7 +985,7 @@ TourCMS.prototype.createEnquiry = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Enquiry object, create empty one if it doesn't exist
   if(typeof a.enquiry === "undefined")
@@ -1018,7 +1022,7 @@ TourCMS.prototype.searchEnquiries = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Set API path
   if(a.channelId==0)
@@ -1054,7 +1058,7 @@ TourCMS.prototype.updateCustomer = function(a) {
   // Channel ID
   // If undefined, use object level channelId
   if(typeof a.channelId === "undefined")
-    a.channelId = this.channelId;
+    a.channelId = this.options.channelId;
 
   // Enquiry object, create empty one if it doesn't exist
   if(typeof a.customer === "undefined")
@@ -1078,7 +1082,7 @@ TourCMS.prototype.updateCustomer = function(a) {
 
 TourCMS.prototype.generateSignature = function(path, channelId, verb, outboundTime, apiKey) {
 
-  var stringToSign = channelId + "/" + this.marketplaceId + "/" + verb + "/" + outboundTime + path;
+  var stringToSign = channelId + "/" + this.options.marketplaceId + "/" + verb + "/" + outboundTime + path;
   var hash = crypto.createHmac('SHA256', apiKey).update(stringToSign).digest('base64');
   var signature = this.rawurlencode(hash);
 
