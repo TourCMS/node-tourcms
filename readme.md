@@ -330,15 +330,15 @@ The following example checks availability for 2 people on the first rate (e.g. u
 TourCMS.checkTourAvailability({
   channelId: 3930,
   qs: {
-    id: 6,
-    date: '2016-01-01',
-    r1: 2
+    id: 1,
+    date: '2016-08-01',
+    r1: 3
   },
   callback: function(response) {
-
     //Loop through each component and output its component key
     response.available_components.component.forEach(function(component) {
       console.log(component.component_key);
+    });
   }
 });
 ```
