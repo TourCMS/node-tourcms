@@ -491,12 +491,15 @@ TourCMS.prototype.checkTourAvailability = function(a) {
     response.available_components.component.forEach(function(component) {
       // Price rows
       component.price_breakdown.price_row = [].concat(component.price_breakdown.price_row);
-      // Pickups
-      if(typeof component.options === 'undefined')
-        component.options = {option:[]};
-      else
-        component.options.option = [].concat(component.options.option);
+      
       // Options
+      if(typeof component.options === 'string' || typeof component.options === 'undefined')
+        component.options = {option:[]};
+      else {
+        component.options["option"] = [].concat(component.options["option"]);
+      }
+
+      // Pickups
       if(typeof component.pickup_points === 'undefined')
           component.pickup_points = {pickup:[]};
         else
