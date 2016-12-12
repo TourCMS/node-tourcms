@@ -24,6 +24,7 @@ Node wrapper for the [TourCMS](http://www.tourcms.com/) [API](http://www.tourcms
     * [Show Departure](#show-departure)
     * [Update Departure](#update-departure)
     * [Check Tour Availability](#check-tour-availability)
+    * [Check Option Availability](#check-option-availability)
     * [Show Promo Code](#show-promo-code)
   * [Booking APIs](#booking-apis)
     * [Search bookings](#search-bookings)
@@ -35,6 +36,10 @@ Node wrapper for the [TourCMS](http://www.tourcms.com/) [API](http://www.tourcms
     * [Add note to Booking](#add-note-to-booking)
     * [Cancel Booking](#cancel-booking)
     * [Delete Booking](#delete-booking)
+    * [Add Booking Component](#add-booking-component)
+    * [Remove Booking Component](#remove-booking-component)
+    * [Update Booking Component](#update-booking-component)
+    * [Send Booking Email](#send-booking-email)
   * [Voucher APIs](#voucher-apis)
     * [Search Vouchers](#search-vouchers)
     * [Redeem Voucher](#redeem-voucher)
@@ -343,6 +348,33 @@ TourCMS.checkTourAvailability({
 });
 ```
 
+#### Check Option Availability
+Check for Option availability.
+
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+http://www.tourcms.com/support/api/mp/tour_checkavail_options.php
+
+```js
+TourCMS.checkOptionAvailability({
+  channelId: 3930,
+  qs: {
+    booking_id: 12662,
+    tour_component_id: 8052295
+  },
+  callback: function(response) {
+    //console.info(response.available_components.options.option);
+    var options = [].concat(response.available_components.options.option);
+    [].forEach.call(options, function(opt) {
+      console.log("Option: "+opt.option_name);
+      [].forEach.call(opt.quantities_and_prices.selection, function(sel) {
+        console.log("   Quantities possible: "+sel.quantity);
+      });
+    });
+  }
+});
+```
+
 #### Show Promo Code
 Get details on a promotional code. Useful for checking whether a promo code is valid for a certain channel, and if so, whether a membership number or similar is required to verify the promo.
 
@@ -543,6 +575,97 @@ TourCMS.deleteBooking({
   bookingId: 8452,
   callback: function(response) {
     console.log(response);
+  }
+});
+```
+
+#### Add booking component
+
+Add a Tour (with or without Options) to a booking, or add Options to an existing Tour that is already on a booking.
+
+http://www.tourcms.com/support/api/mp/booking_add_component.php
+
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+```js
+TourCMS.addBookingComponent({
+  channelId: 3930,
+  booking: {
+    booking_id: 12920,
+    component: {
+      component_key: 'Rjqb+vKn6H5rawI+mt/m56vQ9P6ju1aKv2XO9gZ2OxykgCsUAbrdap/7CTxDKl+p'
+    }
+  },
+  callback: function(response) {
+    console.info(response);
+  }
+});
+```
+
+#### Remove booking component
+
+Remove a tour from a regular (i.e. non-temporary, non-archived) booking.
+
+http://www.tourcms.com/support/api/mp/booking_remove_component.php
+
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+```js
+TourCMS.removeBookingComponent({
+  channelId: 3930,
+  booking: {
+    booking_id: 12920,
+    component: {
+        component_id: 8286001
+    }
+  },
+  callback: function(response) {
+    console.info(response);
+  }
+});
+```
+
+#### Update booking component
+
+Change some details of a particular booking component (tour/option/fee).
+
+http://www.tourcms.com/support/api/mp/booking_update_component.php
+
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+```js
+TourCMS.updateBookingComponent({
+  channelId: 3930,
+  booking: {
+    booking_id: 12920,
+    component: {
+        component_id: 8286216,
+        sale_quantity: 3
+    }
+  },
+  callback: function(response) {
+    console.info(response);
+  }
+});
+```
+
+#### Send booking email
+
+Send one of the pre-configured email templates.
+
+http://www.tourcms.com/support/api/mp/booking_send_email.php
+
+If a `channelId` is not provided, the one passed in the initial configuration will be used.
+
+```js
+TourCMS.sendBookingEmail({
+  channelId: 3930,
+  booking: {
+    booking_id: 12920,
+    email_type: 1
+  },
+  callback: function(response) {
+    console.info(response);
   }
 });
 ```
