@@ -514,7 +514,6 @@ TourCMS.prototype.checkTourAvailability = function(a) {
   this.makeRequest(a);
 };
 
-//Zaida: start #155
 // Check Tour Availability
 TourCMS.prototype.checkOptionAvailability = function(a) {
 
@@ -537,7 +536,6 @@ TourCMS.prototype.checkOptionAvailability = function(a) {
 
   this.makeRequest(a);
 };
-//Zaida: end #155
 
 // Show Promo
 TourCMS.prototype.showPromo = function(a) {
@@ -849,7 +847,6 @@ TourCMS.prototype.deleteBooking = function(a) {
 
 };
 
-//zaida: start #154
 // Booking components
 TourCMS.prototype.addBookingComponent = function(a) {
 
@@ -949,7 +946,6 @@ TourCMS.prototype.sendBookingEmail = function(a) {
 
   this.makeRequest(a);
 };
-//zaida: end #154
 
 // Vouchers
 

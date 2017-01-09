@@ -19,7 +19,7 @@ var TourCMS = new TourCMSApi({
 
 /**********************************
 ****  Remove booking component ****
-* OK
+*
 ***********************************/
 /*TourCMS.removeBookingComponent({
     channelId: 3930,
@@ -37,7 +37,7 @@ var TourCMS = new TourCMSApi({
 
 /**********************************
 ****   Add booking component   ****
-* OK
+*
 ***********************************/
 /*TourCMS.addBookingComponent({
     channelId: 3930,
@@ -54,7 +54,7 @@ var TourCMS = new TourCMSApi({
 
 /**********************************
 ****  Update booking component  ***
-* OK
+*
 ***********************************/
 
 /*TourCMS.updateBookingComponent({
@@ -73,7 +73,7 @@ var TourCMS = new TourCMSApi({
 
 /**********************************
 ****  Send booking email       ****
-* OK
+*
 ***********************************/
 
 /*TourCMS.sendBookingEmail({
@@ -89,7 +89,7 @@ var TourCMS = new TourCMSApi({
 
 /***********************************
 ****  Check option availability ****
-* OK
+*
 ************************************/
 
 TourCMS.checkOptionAvailability({
