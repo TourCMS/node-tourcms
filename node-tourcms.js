@@ -491,7 +491,7 @@ TourCMS.prototype.checkTourAvailability = function(a) {
     response.available_components.component.forEach(function(component) {
       // Price rows
       component.price_breakdown.price_row = [].concat(component.price_breakdown.price_row);
-      
+
       // Options
       if(typeof component.options === 'string' || typeof component.options === 'undefined')
         component.options = {option:[]};
@@ -510,6 +510,29 @@ TourCMS.prototype.checkTourAvailability = function(a) {
   };
 
   a.path = '/c/tour/datesprices/checkavail.xml?' + a.qs;
+
+  this.makeRequest(a);
+};
+
+// Check Tour Availability
+TourCMS.prototype.checkOptionAvailability = function(a) {
+
+  if(typeof a === 'undefined')
+    a = {};
+
+  // If QS undefined
+  if(typeof a.qs === "undefined") {
+      a.qs = {};
+  }
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.options.channelId;
+
+  a.qs = querystring.stringify(a.qs);
+
+  a.path = '/c/booking/options/checkavail.xml?' + a.qs;
 
   this.makeRequest(a);
 };
@@ -822,6 +845,106 @@ TourCMS.prototype.deleteBooking = function(a) {
 
   this.makeRequest(a);
 
+};
+
+// Booking components
+TourCMS.prototype.addBookingComponent = function(a) {
+
+    if(typeof a === "undefined")
+    a = {};
+
+    // Channel ID
+    // If undefined, use object level channelId
+    if(typeof a.channelId === "undefined")
+      a.channelId = this.options.channelId;
+
+    // Set post data
+    a.postData = ({
+      booking: a.booking,
+    });
+
+    // Set API path
+    a.path = '/c/booking/component/new.xml';
+
+    // POST
+    a.verb = 'POST';
+
+    this.makeRequest(a);
+
+};
+
+// Remove a component from a booking
+TourCMS.prototype.removeBookingComponent = function(a) {
+
+  if(typeof a === "undefined")
+    a = {};
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.options.channelId;
+
+  // Set post data
+  a.postData = ({
+    booking: a.booking,
+  });
+
+  // Set API path
+  a.path = '/c/booking/component/delete.xml';
+
+  // POST
+  a.verb = 'POST';
+
+  this.makeRequest(a);
+
+};
+
+// Update a component from a booking
+TourCMS.prototype.updateBookingComponent = function(a) {
+
+  if(typeof a === "undefined")
+    a = {};
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.options.channelId;
+
+  // Set post data
+  a.postData = ({
+    booking: a.booking,
+  });
+
+  // Set API path
+  a.path = '/c/booking/component/update.xml';
+
+  // POST
+  a.verb = 'POST';
+
+  this.makeRequest(a);
+
+};
+
+// Trigger booking email
+TourCMS.prototype.sendBookingEmail = function(a) {
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.options.channelId;
+
+  // Set post data
+  a.postData = ({
+    booking: a.booking,
+  });
+
+  // Set API path
+  a.path = '/c/booking/email/send.xml';
+
+  // POST
+  a.verb = 'POST';
+
+  this.makeRequest(a);
 };
 
 // Vouchers
