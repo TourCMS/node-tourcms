@@ -484,8 +484,12 @@ TourCMS.prototype.checkTourAvailability = function(a) {
 
     if(response.available_components == '\r\n')
       response.available_components = {component:[]};
-    else
+    else {
+      if (typeof response.available_components === 'string') {
+        response.available_components = {component:[]};
+      }
       response.available_components.component = [].concat(response.available_components.component);
+    }
 
     // Ensure each components contents are correct
     response.available_components.component.forEach(function(component) {
