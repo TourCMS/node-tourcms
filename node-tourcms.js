@@ -482,7 +482,7 @@ TourCMS.prototype.checkTourAvailability = function(a) {
   // Ensure we have an available_components.component array
   a.processor = function(response, callback) {
 
-    if(response.available_components == '\r\n')
+    if(!response.available_components)
       response.available_components = {component:[]};
     else
       response.available_components.component = [].concat(response.available_components.component);
