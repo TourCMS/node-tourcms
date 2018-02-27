@@ -610,23 +610,27 @@ TourCMS.prototype.showBooking = function(a) {
   // Sanitise response, tours is an array if empty
   a.processor = function(response, callback) {
 
-    // Ensure we have an array of customers
-    if(typeof response.booking.customers !== "undefined")
-      response.booking.customers.customer = [].concat(response.booking.customers.customer);
-    else
-      response.booking.customers = {customer:[]};
+    if(response.error == "OK" && response.booking){
 
-  // Ensure we have an array of payments
-  if(typeof response.booking.payments !== "undefined")
-    response.booking.payments.payment = [].concat(response.booking.payments.payment);
-  else
-    response.booking.payments = {payment:[]};
+      // Ensure we have an array of customers
+      if(typeof response.booking.customers !== "undefined")
+        response.booking.customers.customer = [].concat(response.booking.customers.customer);
+      else
+        response.booking.customers = {customer:[]};
 
-    // Ensure we have an array of custom fields
-    if(typeof response.booking.custom_fields !== "undefined")
-      response.booking.custom_fields.field = [].concat(response.booking.custom_fields.field);
-    else
-      response.booking.custom_fields = {field:[]};
+      // Ensure we have an array of payments
+      if(typeof response.booking.payments !== "undefined")
+        response.booking.payments.payment = [].concat(response.booking.payments.payment);
+      else
+        response.booking.payments = {payment:[]};
+
+      // Ensure we have an array of custom fields
+      if(typeof response.booking.custom_fields !== "undefined")
+        response.booking.custom_fields.field = [].concat(response.booking.custom_fields.field);
+      else
+        response.booking.custom_fields = {field:[]};
+
+    }
 
     callback(response);
 
