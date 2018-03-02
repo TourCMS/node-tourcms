@@ -6,7 +6,7 @@
     "api"
   ],
   "homepage": "https://github.com/tourcms/node-tourcms",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "author": "TourCMS <support@tourcms.com> (http://www.tourcms.com)",
   "contributors": [
     "Paul Slugocki <paul.slugocki@tourcms.com> (https://github.com/paulslugocki)"
