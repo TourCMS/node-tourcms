@@ -693,14 +693,16 @@ TourCMS.prototype.startNewBooking = function(a) {
   // POST
   a.verb = 'POST';
 
-  // Sanitise response, custmers is an array
+  // Sanitise response, customers is an array
   a.processor = function(response, callback) {
 
     // Ensure we have an array of custom fields
-    if(typeof response.booking.customers !== "undefined")
-      response.booking.customers.customer = [].concat(response.booking.customers.customer);
-    else
-      response.booking.customers = {customer:[]};
+    if(response.error == "OK" && response.booking){
+      if(typeof response.booking.customers !== "undefined")
+        response.booking.customers.customer = [].concat(response.booking.customers.customer);
+      else
+        response.booking.customers = {customer:[]};
+    }
 
     callback(response);
 
