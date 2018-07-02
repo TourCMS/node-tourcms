@@ -68,7 +68,7 @@ TourCMS.prototype.makeRequest = function(a) {
       'x-tourcms-date': outboundTime,
       'Authorization': 'TourCMS ' + a.channelId + ':' + this.options.marketplaceId + ':' + signature,
       'Content-type': 'text/xml;charset="utf-8"',
-      'Content-length': apiParams.length
+      'Content-length': Buffer.byteLength(apiParams, 'utf8')
     }
   };
 
