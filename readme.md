@@ -10,6 +10,7 @@ Node wrapper for the [TourCMS](http://www.tourcms.com/) [API](http://www.tourcms
   * [General / Housekeeping APIs](#general--housekeeping-apis)
     * [API Rate Limit Status](#api-rate-limit-status)
     * [Generic API request](#generic-api-request)
+    * [List staff members](#list-staff-members)
   * [Channel APIs](#channel-apis)
     * [List Channels](#list-channels)
     * [Show Channel](#show-channel)
@@ -46,6 +47,7 @@ Node wrapper for the [TourCMS](http://www.tourcms.com/) [API](http://www.tourcms
   * [Payment APIs](#payment-apis)
     * [Create Payment / Refund](#create-payment--refund)
     * [Create Spreedly Payment](#create-spreedly-payment)
+    * [List Payments](#list-Payments)
   * [Customer &amp; Enquiry APIs](#customer--enquiry-apis)
     * [Show Customer](#show-customer)
     * [Create Customer/Enquiry](#create-customerenquiry)
@@ -114,6 +116,21 @@ TourCMS.genericRequest({
 })
 ```
 Can also provide a `verb` (default is 'GET') and `postData`, which - if provided - must be an object representing the XML data to post to the API.
+
+#### List staff members
+
+List of staff members connected to the channel requested. To be use only for operators, no travel agents.
+
+http://www.tourcms.com/support/api/mp/staff_members_list.php
+
+```js
+TourCMS.listStaffMembers({
+  channelId: 3930,
+  callback: function(response) {
+    console.log(response);
+  }
+})
+```
 
 ### Channel APIs
 
@@ -756,6 +773,34 @@ TourCMS.createSpreedlyPayment({
   },
   callback: function(response, status) {
     console.log(response);
+  }
+});
+```
+
+#### List Payments
+
+List of payments made during a specifif period and/or from staff member.
+
+http://www.tourcms.com/support/api/mp/payments_list.php
+
+This example shows booking id, value and currency payments.
+
+```js
+TourCMS.listPayments({
+  channelId: 3930,
+  qs: {
+    from_date: "2018-03-23",
+    to_date: "2018-03-26"
+  },
+  callback: function(response, status) {
+    if (response.total_payments == 0)
+      console.log("No payments made");
+    else{
+      //Loop through each component and output its component key
+      response.payments.payment.forEach(function(payment) {
+        console.log("Booking " + payment.booking_id + ": " + payment.payment_value + "(" + payment.payment_currency + ")");
+      });
+    }
   }
 });
 ```

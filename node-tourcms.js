@@ -68,7 +68,7 @@ TourCMS.prototype.makeRequest = function(a) {
       'x-tourcms-date': outboundTime,
       'Authorization': 'TourCMS ' + a.channelId + ':' + this.options.marketplaceId + ':' + signature,
       'Content-type': 'text/xml;charset="utf-8"',
-      'Content-length': apiParams.length
+      'Content-length': Buffer.byteLength(apiParams, 'utf8')
     }
   };
 
@@ -693,14 +693,16 @@ TourCMS.prototype.startNewBooking = function(a) {
   // POST
   a.verb = 'POST';
 
-  // Sanitise response, custmers is an array
+  // Sanitise response, customers is an array
   a.processor = function(response, callback) {
 
     // Ensure we have an array of custom fields
-    if(typeof response.booking.customers !== "undefined")
-      response.booking.customers.customer = [].concat(response.booking.customers.customer);
-    else
-      response.booking.customers = {customer:[]};
+    if(response.error == "OK" && response.booking){
+      if(typeof response.booking.customers !== "undefined")
+        response.booking.customers.customer = [].concat(response.booking.customers.customer);
+      else
+        response.booking.customers = {customer:[]};
+    }
 
     callback(response);
 
@@ -1079,6 +1081,78 @@ TourCMS.prototype.createSpreedlyPayment = function(a) {
 
 };
 
+// Seach Enquiries
+TourCMS.prototype.listPayments = function(a) {
+
+  if(typeof a === 'undefined')
+    a = {};
+
+  // Convert/set search params
+  // If undefined
+  if(typeof a.qs === "undefined")
+    a.qs = {};
+
+  a.qs = querystring.stringify(a.qs);
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.options.channelId;
+
+  a.path = '/c/booking/payment/list.xml?' + a.qs;
+
+  // Sanitise response, total_enquiries_count always set
+  // Enquiries is an array if empty
+
+  a.processor = function(response, callback) {
+
+    // Ensure we have a total tour count
+    if(typeof response.total_payments === 'undefined')
+      response.total_payments = '0';
+    else
+      // Ensure we have an array of tours
+      response.payment = [].concat(response.payment);
+
+    callback(response);
+    
+  };
+
+  this.makeRequest(a);
+
+};
+
+
+// Seach Enquiries
+TourCMS.prototype.listStaffMembers = function(a) {
+
+  if(typeof a === 'undefined')
+    a = {};
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.options.channelId;
+
+  a.path = '/c/staff/list.xml';
+
+  // Sanitise response, total_enquiries_count always set
+  // Enquiries is an array if empty
+
+  a.processor = function(response, callback) {
+
+    // Ensure we have a total tour count
+    if(typeof response.total_users === 'undefined')
+      response.total_users = '0';
+    else
+      response.users.user = [].concat(response.users.user);
+
+    callback(response);
+    
+  };
+
+  this.makeRequest(a);
+
+};
 // Customers
 
 // Show Customer
