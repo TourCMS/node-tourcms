@@ -90,7 +90,10 @@ TourCMS.prototype.makeRequest = function(a) {
       parser.parseString(apiResponse, function (err, result) {
         // If the method processes the response, give it back
         // Otherwise call the original callback
-
+        if(!result) {
+          console.error("apiResponse for error"+apiResponse);
+          console.error(err)
+        }
         if(typeof a.processor !== 'undefined')
           a.processor(result.response, a.callback);
         else

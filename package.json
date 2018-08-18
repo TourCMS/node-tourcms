@@ -28,8 +28,8 @@
     "jshint": "^2.6.0",
     "mocha": "^2.1.0"
   },
-  "engines" : {
-      "node" : "*"
+  "engines": {
+    "node": "*"
   },
   "jshintConfig": {
     "boss": true,
