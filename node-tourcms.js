@@ -1167,13 +1167,15 @@ TourCMS.prototype.showCustomer = function(a) {
 
   // Sanitise response, tours is an array if empty
   a.processor = function(response, callback) {
-
-    // Ensure we have an array of custom fields
-    if(typeof response.customer.custom_fields !== "undefined")
-      response.customer.custom_fields.field = [].concat(response.customer.custom_fields.field);
-    else
-      response.customer.custom_fields = {field:[]};
-
+  
+    if(response.error == "OK" && response.customer){
+      // Ensure we have an array of custom fields
+      if(typeof response.customer.custom_fields !== "undefined")
+        response.customer.custom_fields.field = [].concat(response.customer.custom_fields.field);
+      else
+        response.customer.custom_fields = {field:[]};
+    }
+    
     callback(response);
 
   };
