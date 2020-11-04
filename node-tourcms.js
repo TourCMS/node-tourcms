@@ -362,6 +362,53 @@ TourCMS.prototype.showTourDatesDeals = function(a) {
   this.makeRequest(a);
 };
 
+// Get Date list of Datesnprices
+TourCMS.prototype.showDatesnprices = function(a) {
+
+  // If QS undefined
+  if(typeof a.qs === "undefined")
+    a.qs = {};
+
+  // Add in the TourId in if provided separately
+  if(typeof a.tourId !== 'undefined')
+    a.qs.id = a.tourId;
+
+  // Fix id if passed in to qs directly as tourId
+  if(typeof a.qs.tourId !== 'undefined') {
+    a.qs.id = a.qs.tourId;
+    delete a.qs.tourId;
+  }
+
+  a.qs = querystring.stringify(a.qs);
+
+  // Channel ID
+  // If undefined, use object level channelId
+  if(typeof a.channelId === "undefined")
+    a.channelId = this.options.channelId;
+
+  a.path = '/c/tour/datesprices/datesndeals/search.xml?' + a.qs;
+
+  // Sanitise response, total_date_count always set
+  // Tours is an array if empty
+
+  a.processor = function(response, callback) {
+
+  // Ensure we have a total_date_count
+  if(typeof response.total_date_count === 'undefined')
+    response.total_date_count = '0';
+
+  // Ensure we have an array of dates
+  if(typeof response.dates_and_prices === 'undefined')
+    response.dates_and_prices = {date:[]};
+  else
+    response.dates_and_prices.date = [].concat(response.dates_and_prices.date);
+
+    callback(response);
+  };
+
+  this.makeRequest(a);
+};
+
 // Get Departures Overview
 TourCMS.prototype.getDeparturesOverview = function(a) {
 
@@ -428,6 +475,46 @@ TourCMS.prototype.showDeparture = function(a) {
       response.tour.bookings = {booking:[]};
     else
       response.tour.bookings.booking = [].concat(response.tour.bookings.booking);
+
+    callback(response);
+  };
+
+  this.makeRequest(a);
+
+};
+
+// Show Departure period of a particular tour
+TourCMS.prototype.showDeparturePeriod = function(a) {
+
+  // If QS undefined
+  if(typeof a.qs === "undefined")
+      a.qs = {};
+  
+  // Add in the TourId in if provided separately
+  if(typeof a.tourId !== 'undefined')
+    a.qs.id = a.tourId;
+
+  // Fix id if passed in to qs directly as tourId
+  if(typeof a.qs.tourId !== 'undefined') {
+      a.qs.id = a.qs.tourId;
+      delete a.qs.tourId;
+  }
+  
+  a.qs = querystring.stringify(a.qs);
+  
+  if(typeof a.channelId === 'undefined')
+    a.channelId = this.options.channelId;
+
+  a.path = '/c/tour/datesprices/dep/show.xml?' + a.qs;
+
+  // Sanitise response
+  a.processor = function(response, callback) {
+      if(typeof response.tour !== 'undefined') {
+        if(typeof response.tour.dates_and_prices === 'undefined')
+          response.tour.dates_and_prices = {departure:[]};
+        else
+          response.tour.dates_and_prices.departure = [].concat(response.tour.dates_and_prices.departure);
+      }
 
     callback(response);
   };
