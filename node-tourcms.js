@@ -18,7 +18,7 @@ function TourCMS(options) {
     marketplaceId: 0,
     channelId: 0,
     channels: [],
-    userAgent: '',
+    userAgent: 'TourCMS Node Wrapper v2.0.0',
     prependCallerToUserAgent: true
   };
 
