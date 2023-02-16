@@ -17,7 +17,9 @@ function TourCMS(options) {
     apiKey: '',
     marketplaceId: 0,
     channelId: 0,
-    channels: []
+    channels: [],
+    userAgent: '',
+    prependCallerToUserAgent: true
   };
 
   if(typeof options !== 'undefined') {
@@ -30,6 +32,9 @@ function TourCMS(options) {
 
     if(typeof options.channelId !== 'undefined')
       this.options.channelId = options.channelId;
+      
+    if(typeof options.userAgent !== 'undefined')
+      this.options.userAgent = options.userAgent;
   }
 
 }
@@ -60,16 +65,20 @@ TourCMS.prototype.makeRequest = function(a) {
   // Generate the signature
   var signature = this.generateSignature(a.path, a.channelId, a.verb, outboundTime, this.options.apiKey);
 
+  var headers = {
+    'x-tourcms-date': outboundTime,
+    'Authorization': 'TourCMS ' + a.channelId + ':' + this.options.marketplaceId + ':' + signature,
+    'Content-type': 'text/xml;charset="utf-8"',
+    'Content-length': Buffer.byteLength(apiParams, 'utf8')
+  };
+
+  headers = this.addUserAgent(headers, a);
+
   var options = {
     method: a.verb,
     hostname: this.options.hostname,
     path: a.path,
-    headers: {
-      'x-tourcms-date': outboundTime,
-      'Authorization': 'TourCMS ' + a.channelId + ':' + this.options.marketplaceId + ':' + signature,
-      'Content-type': 'text/xml;charset="utf-8"',
-      'Content-length': Buffer.byteLength(apiParams, 'utf8')
-    }
+    headers: headers
   };
 
   var req = https.request(options, function(response) {
@@ -1295,6 +1304,22 @@ TourCMS.prototype.generateSignature = function(path, channelId, verb, outboundTi
 
   return signature;
 };
+
+TourCMS.prototype.addUserAgent = function(headers, a) {
+
+  let userAgent = this.options.userAgent;
+
+  if(userAgent == '')
+    return headers;
+
+  if(this.options.prependCallerToUserAgent) 
+      userAgent = userAgent + ' (' + this.options.marketplaceId + "_" + a.channelId + ')';
+
+  headers['User-Agent'] = userAgent;
+
+  return headers;
+
+}
 
 // Generate the current Unix Timestamp (PHP style)
 TourCMS.prototype.generateTime = function() {
