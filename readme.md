@@ -75,7 +75,7 @@ var TourCMS = new TourCMSApi({
     channelId: YOUR_CHANNEL_ID,
     apiKey: 'YOUR_API_KEY',
     marketplaceId: YOUR_MARKETPLACE_ID,
-    userAgent: 'Your app name'
+    userAgent: 'YOUR_APP_NAME'
   });
 ```
 Then call one of the API methods below.
